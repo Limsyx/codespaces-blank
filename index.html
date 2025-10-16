@@ -4,73 +4,83 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gala Couleur 2026</title>
-  <meta name="description" content="Gala 2026 — Thème Couleur. Site one-page noir & orange avec galerie d’images animées (mode admin), séquence auto et RSVP." />
+  <meta name="description" content="Gala 2026 — Thème Couleur. Site clair (fond blanc), accents orange/noir, galerie animée modifiable en mode admin, RSVP." />
   <style>
     :root{
-      --orange:#ff7a00; --orange-2:#ff9a3b; --black:#0c0c0d; --text:#f4f4f5; --muted:#c9c9ce;
-      --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.35)
+      --orange:#ff7a00;        /* couleur d'accent (UI) */
+      --orange-2:#ff9a3b;      /* variante pour hover/dégradés */
+      --ink:#0c0c0d;           /* texte principal (noir) */
+      --muted:#5a5a60;         /* texte secondaire */
+      --line:#ececf0;          /* bordures claires */
+      --radius:16px;
+      --shadow:0 8px 24px rgba(0,0,0,.08);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      background:
-        radial-gradient(1200px 600px at 70% -10%, rgba(255,122,0,.18), transparent 60%),
-        radial-gradient(1000px 500px at 0% 110%, rgba(255,122,0,.12), transparent 60%),
-        var(--black);
-      line-height:1.55
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink);
+      background:#fff;           /* 👉 fond blanc */
+      line-height:1.55;
     }
     .container{width:min(1100px,92vw);margin:0 auto}
-    header{position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);
-      background:linear-gradient(180deg, rgba(12,12,13,.8), rgba(12,12,13,.35));
-      border-bottom:1px solid rgba(255,122,0,.25)}
+    header{
+      position:sticky;top:0;z-index:100;background:#fff;
+      backdrop-filter:saturate(1.1) blur(8px);
+      border-bottom:1px solid var(--line);
+    }
     .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-    .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700;letter-spacing:.3px}
-    .brand-badge{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--orange),var(--orange-2));box-shadow:var(--shadow);display:grid;place-items:center;font-weight:900}
-    .brand-badge span{color:#0d0d0e}
-    .nav a{color:var(--text);text-decoration:none;opacity:.9}
+    .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;letter-spacing:.2px}
+    .brand-badge{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--orange),var(--orange-2));box-shadow:var(--shadow);display:grid;place-items:center;font-weight:900;color:#fff}
+    .nav a{color:var(--ink);text-decoration:none;opacity:.9}
+    .nav a:hover{color:var(--orange)}
     .nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0}
 
-    .hero{padding:64px 0 36px}
+    .hero{padding:56px 0 28px}
     .hero-inner{display:grid;gap:24px;align-items:center;grid-template-columns:1.2fr .8fr}
-    .tag{display:inline-block;padding:6px 10px;border:1px solid rgba(255,122,0,.4);border-radius:999px;color:var(--muted);font-size:.9rem}
+    @media (max-width:900px){.hero-inner{grid-template-columns:1fr}}
+    .tag{display:inline-block;padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.9rem;background:#fff}
     h1{font-size:clamp(2rem,3vw + 1rem,3.25rem);margin:10px 0 8px;line-height:1.1}
-    .lead{font-size:clamp(1rem,.6vw + .8rem,1.15rem);color:#e8e8ea;opacity:.92}
+    h1 span, h2 span, a.link, .accent{color:var(--orange)}  /* accents orange */
+    .lead{font-size:clamp(1rem,.6vw + .8rem,1.15rem);color:#2a2a2f}
 
-    .card{background:linear-gradient(180deg, rgba(255,122,0,.07), rgba(255,122,0,.0));
-      border:1px solid rgba(255,122,0,.25); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
-    .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
-    .btn{appearance:none;border:none;cursor:pointer;font-weight:700;letter-spacing:.3px;padding:12px 18px;border-radius:12px;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
-    .btn-primary{background:linear-gradient(135deg,var(--orange),var(--orange-2));color:#0d0d0e;box-shadow:0 8px 18px rgba(255,122,0,.35)}
-    .btn-primary:hover{transform:translateY(-2px)}
-    .btn-ghost{background:transparent;color:var(--text);border:1px solid rgba(255,122,0,.35)}
-
-    section{padding:36px 0}
+    .card{
+      background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)
+    }
+    section{padding:32px 0}
     section h2{font-size:clamp(1.4rem,2.2vw + .6rem,2rem);margin:0 0 14px}
     .two-col{display:grid;gap:18px;grid-template-columns:1fr 1fr}
-    @media (max-width:900px){.hero-inner{grid-template-columns:1fr}.two-col{grid-template-columns:1fr}}
+    @media (max-width:900px){.two-col{grid-template-columns:1fr}}
 
     .timeline{position:relative;padding-left:22px}
     .timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--orange),transparent)}
     .tl-item{margin:12px 0}
-    .tl-item strong{color:var(--orange-2)}
+    .tl-item strong{color:var(--orange)}
 
+    /* Galerie */
     .gallery-wrap{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-    .figure{position:relative;overflow:hidden;border-radius:14px;border:1px solid rgba(255,122,0,.25);background:#111}
-    .figure img{width:100%;height:260px;object-fit:cover;display:block;filter:saturate(1.03) contrast(1.05)}
-    .figure figcaption{position:absolute;left:10px;bottom:10px;font-size:.9rem;background:rgba(12,12,13,.6);padding:6px 8px;border-radius:999px;border:1px solid rgba(255,122,0,.35)}
+    .figure{position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--line);background:#fafafa}
+    .figure img{width:100%;height:260px;object-fit:cover;display:block;filter:saturate(1.02) contrast(1.03)}
+    .figure figcaption{position:absolute;left:10px;bottom:10px;font-size:.9rem;background:rgba(255,255,255,.85);padding:6px 8px;border-radius:999px;border:1px solid var(--line)}
+    /* Contrôles inline (admin) */
+    .figure .controls{position:absolute;inset:auto 8px 8px 8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+      background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:12px;padding:8px;box-shadow:var(--shadow)}
+    .figure .controls input,.figure .controls select{padding:6px 8px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+    .figure .controls .mini-btn{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer}
+    .figure .controls .mini-btn.primary{background:linear-gradient(135deg,var(--orange),var(--orange-2));color:#fff;border:none}
 
     .panel{display:grid;gap:12px;align-items:end;grid-template-columns:1.2fr .8fr .8fr auto}
-    .panel input[type="url"], .panel input[type="file"], .panel select{width:100%;padding:11px 12px;border-radius:12px;border:1px solid rgba(255,122,0,.35);background:#131314;color:var(--text)}
+    .panel input[type="url"], .panel input[type="file"], .panel select{width:100%;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink)}
     @media (max-width:950px){.panel{grid-template-columns:1fr}}
 
+    /* Animations */
     .anim{will-change:transform,opacity,filter}
     @keyframes fadeInUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
     .anim-fade-in-up{animation:fadeInUp var(--dur,800ms) ease both}
     @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
     .anim-float{animation:float var(--dur,5s) ease-in-out infinite}
-    @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 rgba(255,122,0,0)}50%{box-shadow:0 0 28px rgba(255,122,0,.35)}}
+    @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 rgba(255,122,0,0)}50%{box-shadow:0 0 20px rgba(255,122,0,.35)}}
     .anim-glow{animation:pulseGlow var(--dur,3.5s) ease-in-out infinite}
     @keyframes slowSpin{to{transform:rotate(360deg)}}
     .anim-spin{animation:slowSpin var(--dur,12s) linear infinite}
@@ -78,16 +88,19 @@
     .anim-slide-in{animation:slideIn var(--dur,700ms) ease-out both}
 
     .muted{color:var(--muted)}
-    .badge{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,122,0,.35);background:#121213}
+    .badge{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:#fff}
     .spacer{height:24px}
-    footer{border-top:1px solid rgba(255,122,0,.25);padding:20px 0 50px;color:var(--muted)}
-    a.link{color:var(--orange-2)}
+    footer{border-top:1px solid var(--line);padding:20px 0 50px;color:var(--muted)}
+    a.link{color:var(--orange)}
+    .btn{appearance:none;border:1px solid var(--line);cursor:pointer;font-weight:700;letter-spacing:.2px;padding:12px 18px;border-radius:12px;background:#fff}
+    .btn-primary{background:linear-gradient(135deg,var(--orange),var(--orange-2));color:#fff;border:none}
+    .btn-ghost{background:#fff;color:var(--ink)}
 
     /* Badge Admin */
     .admin-badge{
       position:fixed; right:12px; bottom:12px; z-index:9999;
-      padding:8px 12px; border-radius:999px; border:1px solid rgba(255,122,0,.35);
-      background:#121213; box-shadow:var(--shadow); font-size:.9rem
+      padding:8px 12px; border-radius:999px; border:1px solid var(--line);
+      background:#fff; box-shadow:var(--shadow); font-size:.9rem
     }
   </style>
 </head>
@@ -95,7 +108,7 @@
   <header>
     <div class="container nav">
       <a class="brand" href="#top" aria-label="Accueil Gala Couleur 2026">
-        <div class="brand-badge" aria-hidden="true"><span>GC</span></div>
+        <div class="brand-badge" aria-hidden="true">GC</div>
         Gala Couleur 2026
       </a>
       <nav aria-label="Navigation principale">
@@ -114,17 +127,17 @@
     <section class="hero">
       <div class="container hero-inner">
         <div>
-          <span class="tag">Thème&nbsp;: <strong style="color:var(--orange-2)">Couleur</strong></span>
-          <h1>Gala Couleur <span style="color:var(--orange-2)">2026</span></h1>
-          <p class="lead">Une expérience immersive où le noir profond rencontre l’orange incandescent. Performances, arts visuels, et scénographie chromatique pour une soirée inoubliable.</p>
+          <span class="tag">Thème&nbsp;: <strong class="accent">Couleur</strong></span>
+          <h1>Gala Couleur <span class="accent">2026</span></h1>
+          <p class="lead">Fond blanc élégant, accents orange et texte noir pour un contraste lisible. Galerie animée modifiable en mode admin.</p>
           <div class="cta-row">
             <a class="btn btn-primary" href="#galerie">Voir la galerie</a>
             <a class="btn btn-ghost" href="#rsvp">Confirmer ma venue</a>
           </div>
         </div>
-        <div class="card" role="img" aria-label="Visuel abstrait orange et noir">
+        <div class="card" role="img" aria-label="Visuel abstrait clair">
           <div class="badge" style="margin-bottom:10px">⚡ Ambiance</div>
-          <p class="muted" style="margin:0">Palette officielle&nbsp;: Noir #0c0c0d & Orange #ff7a00<br/>Tenue conseillée&nbsp;: touche orangée.</p>
+          <p class="muted" style="margin:0">Palette officielle : noir & orange.</p>
           <div class="spacer"></div>
           <div class="badge">📍 Lieu</div>
           <p style="margin:6px 0 0">À préciser — 2026</p>
@@ -136,26 +149,27 @@
       <div class="container two-col">
         <div class="card">
           <h2>À propos</h2>
-          <p>Le Gala Couleur 2026 célèbre les émotions visuelles. Le noir structure l’espace, l’orange enflamme l’atmosphère. La galerie ci-dessous peut être <strong>augmentée en mode admin</strong> pour préparer les écrans de la soirée.</p>
+          <p>Le Gala Couleur 2026 célèbre les émotions visuelles. Fond blanc pour une présentation épurée, accents orange pour l’énergie, texte noir pour la lisibilité.</p>
         </div>
         <div class="card">
           <h2>Couleurs</h2>
           <ul>
-            <li><strong>Orange</strong> — accent, chaleur, énergie (#ff7a00)</li>
-            <li><strong>Noir</strong> — fond, élégance, contraste (#0c0c0d)</li>
+            <li><strong>Orange</strong> — accent, chaleur, énergie</li>
+            <li><strong>Noir</strong> — texte, élégance, contraste</li>
           </ul>
+          <!-- 👉 Codes supprimés de l'UI comme demandé -->
         </div>
       </div>
     </section>
 
     <section id="programme">
       <div class="container">
-        <h2>Programme (exemple)</h2>
+        <h2>Programme</h2>
         <div class="card timeline">
           <div class="tl-item"><strong>19:00</strong> — Ouverture des portes</div>
           <div class="tl-item"><strong>20:00</strong> — Performance d’ouverture</div>
           <div class="tl-item"><strong>21:30</strong> — Live band & installation visuelle</div>
-          <div class="tl-item"><strong>23:00</strong> — DJ set chromatique</div>
+          <div class="tl-item"><strong>23:00</strong> — DJ set</div>
         </div>
       </div>
     </section>
@@ -164,11 +178,11 @@
       <div class="container">
         <h2>Galerie</h2>
 
-        <!-- PANNEAU D'UPLOAD — visible uniquement en mode admin -->
+        <!-- PANNEAU D'AJOUT — visible seulement en admin -->
         <div class="card admin-only" style="margin-bottom:14px">
           <div class="panel">
             <div>
-              <label for="image-url" class="muted">URL de l’image (JPG, PNG, GIF, WebP, APNG)</label>
+              <label for="image-url" class="muted">URL de l’image</label>
               <input id="image-url" type="url" placeholder="https://exemple.com/visuel.webp" />
             </div>
             <div>
@@ -189,23 +203,21 @@
               <button id="add-btn" class="btn btn-primary" type="button">Ajouter</button>
             </div>
           </div>
-          <small class="muted">Astuce&nbsp;: ajoute la même image avec des animations différentes pour un rendu scénique.</small>
+          <small class="muted">Astuce : tu peux ajouter la même image avec d’autres effets pour varier la scène.</small>
         </div>
 
         <div class="gallery-wrap" id="gallery" aria-live="polite"></div>
 
         <div class="spacer"></div>
 
-        <!-- CONTROLES AVANCES — visible uniquement en mode admin -->
+        <!-- CONTROLES AVANCES — visible seulement en admin -->
         <div class="card admin-only">
           <details>
             <summary><strong>Contrôles avancés (JS)</strong></summary>
-            <pre style="white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color:#ffead9; background:#0f0f10; padding:12px; border-radius:12px; border:1px solid rgba(255,122,0,.25);">
-// Exemple : insérer une image custom
-insertAnimatedImage("https://images.unsplash.com/photo-1511506243460-7953b62d4dae?auto=format&fit=crop&w=1200&q=60", { animation: "float", duration: 6000, caption: "Affiche animée" });
-// Tout retirer
+            <pre style="white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color:#2a2a2f; background:#fff; padding:12px; border-radius:12px; border:1px solid var(--line);">
+insertAnimatedImage("https://images.unsplash.com/photo-1511506243460-7953b62d4dae?auto=format&fit=crop&w=1200&q=60",
+  { animation: "float", duration: 6000, caption: "Affiche animée" });
 clearGallery();
-// Appliquer une animation globale
 applyAnimationToAll("glow", 3500);
             </pre>
           </details>
@@ -221,23 +233,23 @@ applyAnimationToAll("glow", 3500);
           <div class="two-col" style="grid-template-columns:1fr 1fr;gap:12px">
             <div>
               <label class="muted">Prénom</label>
-              <input name="prenom" required style="width:100%;padding:11px;border-radius:12px;border:1px solid rgba(255,122,0,.35);background:#131314;color:#f4f4f5">
+              <input name="prenom" required style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink)">
             </div>
             <div>
               <label class="muted">Nom</label>
-              <input name="nom" required style="width:100%;padding:11px;border-radius:12px;border:1px solid rgba(255,122,0,.35);background:#131314;color:#f4f4f5">
+              <input name="nom" required style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink)">
             </div>
           </div>
 
           <div>
             <label class="muted">E-mail</label>
-            <input type="email" name="email" required style="width:100%;padding:11px;border-radius:12px;border:1px solid rgba(255,122,0,.35);background:#131314;color:#f4f4f5">
+            <input type="email" name="email" required style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink)">
           </div>
 
           <div class="two-col" style="grid-template-columns:1fr 1fr;gap:12px">
             <div>
               <label class="muted">Présence</label>
-              <select name="presence" required style="width:100%;padding:11px;border-radius:12px;border:1px solid rgba(255,122,0,.35);background:#131314;color:#f4f4f5">
+              <select name="presence" required style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink)">
                 <option value="Oui">Oui, je viens</option>
                 <option value="Non">Non, désolé·e</option>
                 <option value="Peut-être">Peut-être</option>
@@ -245,19 +257,19 @@ applyAnimationToAll("glow", 3500);
             </div>
             <div>
               <label class="muted">Nombre d’accompagnants</label>
-              <input type="number" name="guests" min="0" value="0" style="width:100%;padding:11px;border-radius:12px;border:1px solid rgba(255,122,0,.35);background:#131314;color:#f4f4f5">
+              <input type="number" name="guests" min="0" value="0" style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink)">
             </div>
           </div>
 
           <div>
             <label class="muted">Message (optionnel)</label>
-            <textarea name="message" rows="3" style="width:100%;padding:11px;border-radius:12px;border:1px solid rgba(255,122,0,.35);background:#131314;color:#f4f4f5"></textarea>
+            <textarea name="message" rows="3" style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink)"></textarea>
           </div>
 
           <!-- Réglages Formspree -->
           <input type="hidden" name="_subject" value="RSVP — Gala Couleur 2026">
           <input type="hidden" name="_captcha" value="false">
-          <!-- Option : page de remerciement -->
+          <!-- Option : redirection après envoi -->
           <!-- <input type="hidden" name="_next" value="https://TON-DOMAINE/merci.html"> -->
           <!-- Anti-spam (honeypot) -->
           <input type="text" name="_honey" style="display:none">
@@ -273,15 +285,15 @@ applyAnimationToAll("glow", 3500);
         <div class="card">
           <h2>Infos pratiques</h2>
           <ul>
-            <li>Tenue&nbsp;: chic, avec touche <strong>orange</strong></li>
-            <li>Accessibilité&nbsp;: contrastes élevés, police système</li>
-            <li>Technique&nbsp;: galerie compatible GIF/APNG/WebP (animations natives conservées)</li>
+            <li>Tenue : chic, avec touche <strong class="accent">orange</strong></li>
+            <li>Accessibilité : lisibilité élevée (fond clair, texte noir)</li>
+            <li>Technique : GIF/APNG/WebP pris en charge</li>
           </ul>
         </div>
         <div class="card">
           <h2>Contact</h2>
-          <p class="muted">Pour partenaires, bénévoles, médias — ajoutez votre email ici.</p>
-          <a class="btn btn-ghost" href="mailto:orga@gala-couleur.example">orga@gala-couleur.example</a>
+          <p class="muted">Partenaires, bénévoles, médias — ajoutez votre email ici.</p>
+          <a class="btn" href="mailto:orga@gala-couleur.example">orga@gala-couleur.example</a>
         </div>
       </div>
     </section>
@@ -289,16 +301,16 @@ applyAnimationToAll("glow", 3500);
 
   <footer>
     <div class="container">
-      © 2026 Gala Couleur — Design noir & orange. Fait avec ♥.
+      © 2026 Gala Couleur — UI claire, accents orange & texte noir.
     </div>
   </footer>
 
   <script>
-    // ===== Utilitaires courtes
+    /* ===== Helpers ===== */
     const $ = (sel, root=document) => root.querySelector(sel);
     const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
-    // ===== Mode admin (URL ?admin=1 -> mémorisé)
+    /* ===== Admin Gate (URL ?admin=1) ===== */
     (function adminGate(){
       const params = new URLSearchParams(location.search);
       const isAdmin = params.get('admin') === '1' || localStorage.getItem('gc_admin') === '1';
@@ -311,14 +323,14 @@ applyAnimationToAll("glow", 3500);
         $('#logout-admin').addEventListener('click', (e) => {
           e.preventDefault();
           localStorage.removeItem('gc_admin');
-          location.href = location.pathname; // recharge sans ?admin
+          location.href = location.pathname;
         });
       } else {
         $$('.admin-only').forEach(el => el.remove());
       }
     })();
 
-    // ===== Galerie (API front)
+    /* ===== Animations ===== */
     const ANIM_CLASS = {
       'fade-in-up':'anim-fade-in-up',
       'float':'anim-float',
@@ -327,12 +339,15 @@ applyAnimationToAll("glow", 3500);
       'slide-in':'anim-slide-in',
     };
 
+    /* ===== Galerie : création figure + contrôles d'édition (admin) ===== */
     function makeFigure(src, { animation='fade-in-up', duration=800, caption='' }={}){
       const fig = document.createElement('figure');
       fig.className = 'figure anim ' + (ANIM_CLASS[animation] || 'anim-fade-in-up');
       fig.style.setProperty('--dur', (typeof duration==='number'? duration+'ms': duration));
       fig.setAttribute('tabindex','0');
       fig.setAttribute('role','group');
+      fig.dataset.anim = animation;
+      fig.dataset.dur = (typeof duration==='number'? duration: 800);
 
       const img = document.createElement('img');
       img.src = src;
@@ -341,21 +356,52 @@ applyAnimationToAll("glow", 3500);
       const cap = document.createElement('figcaption');
       cap.textContent = caption || '';
 
-      const btn = document.createElement('button');
-      btn.className = 'btn btn-ghost';
-      btn.style.position = 'absolute';
-      btn.style.top = '10px';
-      btn.style.right = '10px';
-      btn.style.padding = '6px 10px';
-      btn.style.backdropFilter = 'blur(3px)';
-      btn.style.fontSize = '12px';
-      btn.textContent = 'Retirer';
-      btn.addEventListener('click', () => fig.remove());
+      /* Contrôles inline — seulement si admin */
+      const admin = localStorage.getItem('gc_admin') === '1' || new URLSearchParams(location.search).get('admin') === '1';
+      if (admin) {
+        const controls = document.createElement('div');
+        controls.className = 'controls';
 
-      fig.addEventListener('mouseenter', () => fig.style.animationPlayState = 'paused');
-      fig.addEventListener('mouseleave', () => fig.style.animationPlayState = 'running');
+        const capInput = Object.assign(document.createElement('input'), { type:'text', placeholder:'Légende', value: caption || '' });
+        const animSel = document.createElement('select');
+        ['fade-in-up','float','glow','spin','slide-in'].forEach(v=>{
+          const o=document.createElement('option'); o.value=v; o.textContent=v; if(v===animation) o.selected=true; animSel.appendChild(o);
+        });
+        const durInput = Object.assign(document.createElement('input'), { type:'number', min:'100', step:'100', value: (typeof duration==='number'? duration: 800) });
+        const urlInput = Object.assign(document.createElement('input'), { type:'url', placeholder:'Nouvelle URL image' });
+        const fileInput = Object.assign(document.createElement('input'), { type:'file' }); fileInput.accept='image/*';
 
-      fig.append(img, cap, btn);
+        const applyBtn = Object.assign(document.createElement('button'), { className:'mini-btn primary', type:'button', textContent:'Appliquer' });
+        const removeBtn = Object.assign(document.createElement('button'), { className:'mini-btn', type:'button', textContent:'Retirer' });
+
+        applyBtn.addEventListener('click', ()=>{
+          // légende
+          cap.textContent = capInput.value || '';
+          // animation
+          fig.className = fig.className.replace(/anim-[a-z-]+/g,'').trim();
+          fig.classList.add('figure','anim', ANIM_CLASS[animSel.value] || 'anim-fade-in-up');
+          fig.dataset.anim = animSel.value;
+          // durée
+          const d = parseInt(durInput.value||'800',10);
+          fig.style.setProperty('--dur', d+'ms');
+          fig.dataset.dur = d;
+          // remplacement image (URL prioritaire, sinon fichier)
+          if (urlInput.value.trim()){
+            img.src = urlInput.value.trim();
+          } else if (fileInput.files && fileInput.files[0]){
+            img.src = URL.createObjectURL(fileInput.files[0]);
+          }
+        });
+
+        removeBtn.addEventListener('click', ()=>fig.remove());
+
+        controls.append('Légende:', capInput, ' Effet:', animSel, ' Durée(ms):', durInput, ' URL:', urlInput, fileInput, applyBtn, removeBtn);
+        fig.append(controls);
+      } else {
+        // bouton discret pour non-admin : aucun (tout public)
+      }
+
+      fig.append(img, cap);
       return fig;
     }
 
@@ -376,11 +422,13 @@ applyAnimationToAll("glow", 3500);
         fig.className = fig.className.replace(/anim-[a-z-]+/g,'').trim();
         fig.classList.add('anim', ANIM_CLASS[animation] || 'anim-glow');
         fig.style.setProperty('--dur', (typeof duration==='number'? duration+'ms': duration));
+        fig.dataset.anim = animation;
+        fig.dataset.dur = (typeof duration==='number'? duration: 3000);
       });
     }
     window.applyAnimationToAll = applyAnimationToAll;
 
-    // ===== Formulaire d'ajout (admin)
+    /* ===== Formulaire d'ajout (admin) ===== */
     const addBtn = $('#add-btn');
     if (addBtn) {
       addBtn.addEventListener('click', ()=>{
@@ -398,38 +446,22 @@ applyAnimationToAll("glow", 3500);
       });
     }
 
-    // ===== Séquence automatisée (intro) + boucle d'animations
+    /* ===== Séquence d'intro (optionnel) + boucle d'animations ===== */
     document.addEventListener('DOMContentLoaded', ()=>{
-      // 1) Séquence d'apparition des images (une à une)
       const sequence = [
         { src:"https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?auto=format&fit=crop&w=1200&q=60", anim:"float", dur:6000, cap:"Nébuleuse orange — lumière suspendue" },
-        { src:"https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1200&q=60", anim:"fade-in-up", dur:900, cap:"Silhouette dans la brume — entrée des invités" },
-        { src:"https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=1200&q=60", anim:"glow", dur:3500, cap:"Reflets dorés sur le parquet" },
-        { src:"https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=60", anim:"spin", dur:10000, cap:"Projecteur rotatif — lumière astrale" },
-        { src:"https://images.unsplash.com/photo-1520975918318-3e3c5f63ae9b?auto=format&fit=crop&w=1200&q=60", anim:"float", dur:7000, cap:"Bulles de couleur flottant dans l’air" },
-        { src:"https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&w=1200&q=60", anim:"fade-in-up", dur:1200, cap:"Table dressée — velours de lumière" },
-        { src:"https://images.unsplash.com/photo-1516306580123-e6e52b1b7bff?auto=format&fit=crop&w=1200&q=60", anim:"glow", dur:4000, cap:"Mur LED — pulsations lumineuses" },
-        { src:"https://images.unsplash.com/photo-1520975698519-59c1c6bde3a8?auto=format&fit=crop&w=1200&q=60", anim:"slide-in", dur:1300, cap:"Danseuse traversant le faisceau" },
-        { src:"https://images.unsplash.com/photo-1519659528534-8a1c1f9bfa5b?auto=format&fit=crop&w=1200&q=60", anim:"spin", dur:12000, cap:"Spirale d’éclats — final" },
+        { src:"https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1200&q=60", anim:"fade-in-up", dur:900, cap:"Silhouette dans la brume" },
+        { src:"https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=1200&q=60", anim:"glow", dur:3500, cap:"Reflets dorés" },
       ];
-
       clearGallery();
-      let t = 0;
-      const step = 550; // délai entre apparitions
-      sequence.forEach((item, i)=>{
-        setTimeout(()=>{
-          insertAnimatedImage(item.src, { animation:item.anim, duration:item.dur, caption:item.cap });
-        }, t);
+      let t = 0, step = 500;
+      sequence.forEach(item=>{
+        setTimeout(()=> insertAnimatedImage(item.src,{animation:item.anim,duration:item.dur,caption:item.cap}), t);
         t += step;
       });
-
-      // 2) Boucle : alterner halo <-> flottement sur toutes les images
       setTimeout(()=>{
-        setInterval(() => {
-          applyAnimationToAll("glow", 3500);
-          setTimeout(() => applyAnimationToAll("float", 5000), 3600);
-        }, 9000);
-      }, t + 800); // démarre la boucle après la fin de la séquence
+        setInterval(()=>{ applyAnimationToAll("glow", 3500); setTimeout(()=>applyAnimationToAll("float", 5000), 3600); }, 9000);
+      }, t+800);
     });
   </script>
 </body>
