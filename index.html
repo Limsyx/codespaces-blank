@@ -4,35 +4,46 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gala Couleur 2026</title>
-  <meta name="description" content="Gala 2026 — Thème Couleur. Site clair (fond blanc), accents orange/noir, galerie animée modifiable en mode admin, RSVP." />
+  <meta name="description" content="Gala 2026 — Fond d'écran diaporama en fondu + admin upload + RSVP." />
   <style>
     :root{
-      --orange:#ff7a00;        /* couleur d'accent (UI) */
-      --orange-2:#ff9a3b;      /* variante pour hover/dégradés */
-      --ink:#0c0c0d;           /* texte principal (noir) */
-      --muted:#5a5a60;         /* texte secondaire */
-      --line:#ececf0;          /* bordures claires */
-      --radius:16px;
-      --shadow:0 8px 24px rgba(0,0,0,.08);
+      --orange:#ff7a00; --orange-2:#ff9a3b; --ink:#0c0c0d; --muted:#5a5a60; --line:#ececf0;
+      --radius:16px; --shadow:0 8px 24px rgba(0,0,0,.08)
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";
-      color:var(--ink);
-      background:#fff;           /* 👉 fond blanc */
-      line-height:1.55;
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans";
+      color:var(--ink); background:#fff; line-height:1.55;
     }
+
+    /* ===== Fond diaporama (derrière toute la page) ===== */
+    #bg-slideshow{
+      position:fixed; inset:0; z-index:-2; overflow:hidden; background:#000;
+    }
+    #bg-slideshow img{
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+      opacity:0; transition:opacity 1.2s ease;
+      filter: saturate(1.05) contrast(1.05);
+    }
+    #bg-slideshow img.active{ opacity:1; }
+
+    /* Voile blanc pour lisibilité du contenu */
+    .page-overlay{
+      position:fixed; inset:0; z-index:-1; pointer-events:none;
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(2px);
+    }
+
     .container{width:min(1100px,92vw);margin:0 auto}
     header{
-      position:sticky;top:0;z-index:100;background:#fff;
-      backdrop-filter:saturate(1.1) blur(8px);
+      position:sticky; top:0; z-index:10; background:rgba(255,255,255,.85);
+      backdrop-filter: saturate(1.1) blur(8px);
       border-bottom:1px solid var(--line);
     }
     .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-    .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;letter-spacing:.2px}
-    .brand-badge{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--orange),var(--orange-2));box-shadow:var(--shadow);display:grid;place-items:center;font-weight:900;color:#fff}
+    .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800}
+    .brand-badge{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--orange),var(--orange-2));box-shadow:var(--shadow);display:grid;place-items:center;color:#fff;font-weight:900}
     .nav a{color:var(--ink);text-decoration:none;opacity:.9}
     .nav a:hover{color:var(--orange)}
     .nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0}
@@ -42,50 +53,23 @@
     @media (max-width:900px){.hero-inner{grid-template-columns:1fr}}
     .tag{display:inline-block;padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.9rem;background:#fff}
     h1{font-size:clamp(2rem,3vw + 1rem,3.25rem);margin:10px 0 8px;line-height:1.1}
-    h1 span, h2 span, a.link, .accent{color:var(--orange)}  /* accents orange */
+    h1 span,.accent{color:var(--orange)}
     .lead{font-size:clamp(1rem,.6vw + .8rem,1.15rem);color:#2a2a2f}
 
-    .card{
-      background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)
-    }
+    .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
     section{padding:32px 0}
     section h2{font-size:clamp(1.4rem,2.2vw + .6rem,2rem);margin:0 0 14px}
     .two-col{display:grid;gap:18px;grid-template-columns:1fr 1fr}
     @media (max-width:900px){.two-col{grid-template-columns:1fr}}
-
     .timeline{position:relative;padding-left:22px}
     .timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--orange),transparent)}
     .tl-item{margin:12px 0}
     .tl-item strong{color:var(--orange)}
 
-    /* Galerie */
-    .gallery-wrap{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-    .figure{position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--line);background:#fafafa}
-    .figure img{width:100%;height:260px;object-fit:cover;display:block;filter:saturate(1.02) contrast(1.03)}
-    .figure figcaption{position:absolute;left:10px;bottom:10px;font-size:.9rem;background:rgba(255,255,255,.85);padding:6px 8px;border-radius:999px;border:1px solid var(--line)}
-    /* Contrôles inline (admin) */
-    .figure .controls{position:absolute;inset:auto 8px 8px 8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;
-      background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:12px;padding:8px;box-shadow:var(--shadow)}
-    .figure .controls input,.figure .controls select{padding:6px 8px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink)}
-    .figure .controls .mini-btn{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer}
-    .figure .controls .mini-btn.primary{background:linear-gradient(135deg,var(--orange),var(--orange-2));color:#fff;border:none}
-
+    /* Panneau admin (ajout de slides) */
     .panel{display:grid;gap:12px;align-items:end;grid-template-columns:1.2fr .8fr .8fr auto}
     .panel input[type="url"], .panel input[type="file"], .panel select{width:100%;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink)}
     @media (max-width:950px){.panel{grid-template-columns:1fr}}
-
-    /* Animations */
-    .anim{will-change:transform,opacity,filter}
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-    .anim-fade-in-up{animation:fadeInUp var(--dur,800ms) ease both}
-    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
-    .anim-float{animation:float var(--dur,5s) ease-in-out infinite}
-    @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 rgba(255,122,0,0)}50%{box-shadow:0 0 20px rgba(255,122,0,.35)}}
-    .anim-glow{animation:pulseGlow var(--dur,3.5s) ease-in-out infinite}
-    @keyframes slowSpin{to{transform:rotate(360deg)}}
-    .anim-spin{animation:slowSpin var(--dur,12s) linear infinite}
-    @keyframes slideIn{from{transform:translateX(16px);opacity:0}to{transform:translateX(0);opacity:1}}
-    .anim-slide-in{animation:slideIn var(--dur,700ms) ease-out both}
 
     .muted{color:var(--muted)}
     .badge{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:#fff}
@@ -105,6 +89,10 @@
   </style>
 </head>
 <body>
+  <!-- Couche fond (diaporama) -->
+  <div id="bg-slideshow" aria-hidden="true"></div>
+  <div class="page-overlay" aria-hidden="true"></div>
+
   <header>
     <div class="container nav">
       <a class="brand" href="#top" aria-label="Accueil Gala Couleur 2026">
@@ -115,7 +103,7 @@
         <ul>
           <li><a href="#a-propos">À propos</a></li>
           <li><a href="#programme">Programme</a></li>
-          <li><a href="#galerie">Galerie</a></li>
+          <li><a href="#galerie">Fond & Admin</a></li>
           <li><a href="#rsvp">RSVP</a></li>
           <li><a href="#infos">Infos</a></li>
         </ul>
@@ -129,15 +117,15 @@
         <div>
           <span class="tag">Thème&nbsp;: <strong class="accent">Couleur</strong></span>
           <h1>Gala Couleur <span class="accent">2026</span></h1>
-          <p class="lead">Fond blanc élégant, accents orange et texte noir pour un contraste lisible. Galerie animée modifiable en mode admin.</p>
+          <p class="lead">Fond d’écran en diaporama (fondu successif), texte noir lisible, accents orange, et panneau d’upload en mode admin.</p>
           <div class="cta-row">
-            <a class="btn btn-primary" href="#galerie">Voir la galerie</a>
+            <a class="btn btn-primary" href="#galerie">Configurer le fond (admin)</a>
             <a class="btn btn-ghost" href="#rsvp">Confirmer ma venue</a>
           </div>
         </div>
-        <div class="card" role="img" aria-label="Visuel abstrait clair">
+        <div class="card" role="img" aria-label="Présentation">
           <div class="badge" style="margin-bottom:10px">⚡ Ambiance</div>
-          <p class="muted" style="margin:0">Palette officielle : noir & orange.</p>
+          <p class="muted" style="margin:0">Fond animé par diaporama. Vous pouvez ajouter vos visuels (admin).</p>
           <div class="spacer"></div>
           <div class="badge">📍 Lieu</div>
           <p style="margin:6px 0 0">À préciser — 2026</p>
@@ -149,7 +137,7 @@
       <div class="container two-col">
         <div class="card">
           <h2>À propos</h2>
-          <p>Le Gala Couleur 2026 célèbre les émotions visuelles. Fond blanc pour une présentation épurée, accents orange pour l’énergie, texte noir pour la lisibilité.</p>
+          <p>Le fond plein écran change automatiquement par fondu. Le contenu reste lisible grâce à un voile blanc léger.</p>
         </div>
         <div class="card">
           <h2>Couleurs</h2>
@@ -157,7 +145,7 @@
             <li><strong>Orange</strong> — accent, chaleur, énergie</li>
             <li><strong>Noir</strong> — texte, élégance, contraste</li>
           </ul>
-          <!-- 👉 Codes supprimés de l'UI comme demandé -->
+          <!-- Codes couleurs retirés de l'UI -->
         </div>
       </div>
     </section>
@@ -176,7 +164,7 @@
 
     <section id="galerie">
       <div class="container">
-        <h2>Galerie</h2>
+        <h2>Fond & Admin (diaporama)</h2>
 
         <!-- PANNEAU D'AJOUT — visible seulement en admin -->
         <div class="card admin-only" style="margin-bottom:14px">
@@ -190,38 +178,29 @@
               <input id="image-file" type="file" accept="image/*" />
             </div>
             <div>
-              <label for="anim-type" class="muted">Animation</label>
-              <select id="anim-type">
-                <option value="fade-in-up">Apparition</option>
-                <option value="float">Flottement</option>
-                <option value="glow">Halo</option>
-                <option value="spin">Rotation</option>
-                <option value="slide-in">Glissement</option>
-              </select>
+              <label for="slide-duration" class="muted">Durée (ms) par image</label>
+              <input id="slide-duration" type="number" min="2000" step="500" value="6000" />
             </div>
             <div>
-              <button id="add-btn" class="btn btn-primary" type="button">Ajouter</button>
+              <button id="add-btn" class="btn btn-primary" type="button">Ajouter au fond</button>
             </div>
           </div>
-          <small class="muted">Astuce : tu peux ajouter la même image avec d’autres effets pour varier la scène.</small>
+          <small class="muted">
+            Astuce : ajoute plusieurs images — elles défileront automatiquement en fondu.  
+            <br/>Utilise <code>?admin=1</code> pour afficher ce panneau, et “désactiver” via le badge.
+          </small>
         </div>
 
-        <div class="gallery-wrap" id="gallery" aria-live="polite"></div>
-
-        <div class="spacer"></div>
-
-        <!-- CONTROLES AVANCES — visible seulement en admin -->
-        <div class="card admin-only">
-          <details>
-            <summary><strong>Contrôles avancés (JS)</strong></summary>
-            <pre style="white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color:#2a2a2f; background:#fff; padding:12px; border-radius:12px; border:1px solid var(--line);">
-insertAnimatedImage("https://images.unsplash.com/photo-1511506243460-7953b62d4dae?auto=format&fit=crop&w=1200&q=60",
-  { animation: "float", duration: 6000, caption: "Affiche animée" });
-clearGallery();
-applyAnimationToAll("glow", 3500);
-            </pre>
+        <div class="card admin-only" id="slides-admin">
+          <details open>
+            <summary><strong>Diaporama — liste des visuels</strong></summary>
+            <div id="slides-list" class="muted" style="display:grid;gap:8px;margin-top:10px"></div>
+            <div class="spacer"></div>
+            <button class="btn" id="shuffle-btn" type="button">Mélanger l’ordre</button>
+            <button class="btn" id="clear-btn" type="button">Tout retirer</button>
           </details>
         </div>
+
       </div>
     </section>
 
@@ -266,12 +245,9 @@ applyAnimationToAll("glow", 3500);
             <textarea name="message" rows="3" style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink)"></textarea>
           </div>
 
-          <!-- Réglages Formspree -->
           <input type="hidden" name="_subject" value="RSVP — Gala Couleur 2026">
           <input type="hidden" name="_captcha" value="false">
-          <!-- Option : redirection après envoi -->
           <!-- <input type="hidden" name="_next" value="https://TON-DOMAINE/merci.html"> -->
-          <!-- Anti-spam (honeypot) -->
           <input type="text" name="_honey" style="display:none">
 
           <button class="btn btn-primary" type="submit">Envoyer l’RSVP</button>
@@ -285,9 +261,9 @@ applyAnimationToAll("glow", 3500);
         <div class="card">
           <h2>Infos pratiques</h2>
           <ul>
-            <li>Tenue : chic, avec touche <strong class="accent">orange</strong></li>
-            <li>Accessibilité : lisibilité élevée (fond clair, texte noir)</li>
-            <li>Technique : GIF/APNG/WebP pris en charge</li>
+            <li>Fond animé en diaporama (fondu)</li>
+            <li>Lisibilité : voile blanc + texte noir</li>
+            <li>Admin : <code>?admin=1</code> pour gérer les images</li>
           </ul>
         </div>
         <div class="card">
@@ -301,7 +277,7 @@ applyAnimationToAll("glow", 3500);
 
   <footer>
     <div class="container">
-      © 2026 Gala Couleur — UI claire, accents orange & texte noir.
+      © 2026 Gala Couleur — Fond diaporama en fondu, admin upload & RSVP.
     </div>
   </footer>
 
@@ -330,138 +306,211 @@ applyAnimationToAll("glow", 3500);
       }
     })();
 
-    /* ===== Animations ===== */
-    const ANIM_CLASS = {
-      'fade-in-up':'anim-fade-in-up',
-      'float':'anim-float',
-      'glow':'anim-glow',
-      'spin':'anim-spin',
-      'slide-in':'anim-slide-in',
-    };
+    /* ===== Diaporama plein écran (fondu) ===== */
+    const SlideShow = (() => {
+      const root = $('#bg-slideshow');
+      const slides = [];           // {imgEl, duration}
+      let current = -1;
+      let timer = null;
+      let defaultDuration = 6000;  // ms, peut être changé via input
 
-    /* ===== Galerie : création figure + contrôles d'édition (admin) ===== */
-    function makeFigure(src, { animation='fade-in-up', duration=800, caption='' }={}){
-      const fig = document.createElement('figure');
-      fig.className = 'figure anim ' + (ANIM_CLASS[animation] || 'anim-fade-in-up');
-      fig.style.setProperty('--dur', (typeof duration==='number'? duration+'ms': duration));
-      fig.setAttribute('tabindex','0');
-      fig.setAttribute('role','group');
-      fig.dataset.anim = animation;
-      fig.dataset.dur = (typeof duration==='number'? duration: 800);
-
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = caption || 'Visuel gala';
-
-      const cap = document.createElement('figcaption');
-      cap.textContent = caption || '';
-
-      /* Contrôles inline — seulement si admin */
-      const admin = localStorage.getItem('gc_admin') === '1' || new URLSearchParams(location.search).get('admin') === '1';
-      if (admin) {
-        const controls = document.createElement('div');
-        controls.className = 'controls';
-
-        const capInput = Object.assign(document.createElement('input'), { type:'text', placeholder:'Légende', value: caption || '' });
-        const animSel = document.createElement('select');
-        ['fade-in-up','float','glow','spin','slide-in'].forEach(v=>{
-          const o=document.createElement('option'); o.value=v; o.textContent=v; if(v===animation) o.selected=true; animSel.appendChild(o);
-        });
-        const durInput = Object.assign(document.createElement('input'), { type:'number', min:'100', step:'100', value: (typeof duration==='number'? duration: 800) });
-        const urlInput = Object.assign(document.createElement('input'), { type:'url', placeholder:'Nouvelle URL image' });
-        const fileInput = Object.assign(document.createElement('input'), { type:'file' }); fileInput.accept='image/*';
-
-        const applyBtn = Object.assign(document.createElement('button'), { className:'mini-btn primary', type:'button', textContent:'Appliquer' });
-        const removeBtn = Object.assign(document.createElement('button'), { className:'mini-btn', type:'button', textContent:'Retirer' });
-
-        applyBtn.addEventListener('click', ()=>{
-          // légende
-          cap.textContent = capInput.value || '';
-          // animation
-          fig.className = fig.className.replace(/anim-[a-z-]+/g,'').trim();
-          fig.classList.add('figure','anim', ANIM_CLASS[animSel.value] || 'anim-fade-in-up');
-          fig.dataset.anim = animSel.value;
-          // durée
-          const d = parseInt(durInput.value||'800',10);
-          fig.style.setProperty('--dur', d+'ms');
-          fig.dataset.dur = d;
-          // remplacement image (URL prioritaire, sinon fichier)
-          if (urlInput.value.trim()){
-            img.src = urlInput.value.trim();
-          } else if (fileInput.files && fileInput.files[0]){
-            img.src = URL.createObjectURL(fileInput.files[0]);
-          }
-        });
-
-        removeBtn.addEventListener('click', ()=>fig.remove());
-
-        controls.append('Légende:', capInput, ' Effet:', animSel, ' Durée(ms):', durInput, ' URL:', urlInput, fileInput, applyBtn, removeBtn);
-        fig.append(controls);
-      } else {
-        // bouton discret pour non-admin : aucun (tout public)
+      function add(src, duration){
+        const img = new Image();
+        img.decoding = 'async';
+        img.loading = 'lazy';
+        img.style.opacity = '0';
+        img.alt = 'Fond diaporama';
+        img.addEventListener('error', ()=> img.remove());
+        img.src = src;
+        root.appendChild(img);
+        slides.push({ imgEl: img, duration: duration || defaultDuration });
+        if (slides.length === 1) {
+          // première image -> afficher
+          img.classList.add('active');
+          current = 0;
+          start();
+        }
+        renderAdminList();
+        return img;
       }
 
-      fig.append(img, cap);
-      return fig;
-    }
+      function clear(){
+        slides.splice(0, slides.length);
+        root.innerHTML = '';
+        stop();
+        current = -1;
+        renderAdminList();
+      }
 
-    function insertAnimatedImage(src, opts={}){
-      const gallery = $('#gallery');
-      if(!gallery) return;
-      const figure = makeFigure(src, opts);
-      gallery.prepend(figure);
-      return figure;
-    }
-    window.insertAnimatedImage = insertAnimatedImage;
+      function shuffle(){
+        for (let i = slides.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [slides[i], slides[j]] = [slides[j], slides[i]];
+        }
+        // Réorganiser l'ordre dans le DOM
+        root.innerHTML = '';
+        slides.forEach(s => root.appendChild(s.imgEl));
+        renderAdminList();
+      }
 
-    function clearGallery(){ const g=$('#gallery'); if(g) g.innerHTML = '' }
-    window.clearGallery = clearGallery;
+      function next(){
+        if (slides.length === 0) return;
+        const prev = current;
+        current = (current + 1) % slides.length;
+        if (prev !== -1) slides[prev].imgEl.classList.remove('active');
+        slides[current].imgEl.classList.add('active');
+        schedule();
+      }
 
-    function applyAnimationToAll(animation='glow', duration=3000){
-      $$('#gallery .figure').forEach(fig=>{
-        fig.className = fig.className.replace(/anim-[a-z-]+/g,'').trim();
-        fig.classList.add('anim', ANIM_CLASS[animation] || 'anim-glow');
-        fig.style.setProperty('--dur', (typeof duration==='number'? duration+'ms': duration));
-        fig.dataset.anim = animation;
-        fig.dataset.dur = (typeof duration==='number'? duration: 3000);
-      });
-    }
-    window.applyAnimationToAll = applyAnimationToAll;
+      function schedule(){
+        stop();
+        if (slides.length === 0) return;
+        const dur = slides[current].duration || defaultDuration;
+        timer = setTimeout(next, dur);
+      }
+      function start(){
+        stop();
+        if (slides.length > 0) timer = setTimeout(next, slides[current].duration || defaultDuration);
+      }
+      function stop(){
+        if (timer) { clearTimeout(timer); timer = null; }
+      }
 
-    /* ===== Formulaire d'ajout (admin) ===== */
+      // Admin: liste & actions
+      const listEl = $('#slides-list');
+      function renderAdminList(){
+        if (!listEl) return;
+        listEl.innerHTML = '';
+        slides.forEach((s, i) => {
+          const row = document.createElement('div');
+          row.style.display = 'grid';
+          row.style.gridTemplateColumns = '60px 1fr auto auto';
+          row.style.alignItems = 'center';
+          row.style.gap = '10px';
+          row.style.padding = '8px';
+          row.style.border = '1px solid var(--line)';
+          row.style.borderRadius = '10px';
+          row.style.background = '#fff';
+
+          const thumb = document.createElement('img');
+          thumb.src = s.imgEl.src;
+          thumb.style.width = '60px';
+          thumb.style.height = '40px';
+          thumb.style.objectFit = 'cover';
+          thumb.style.borderRadius = '8px';
+          row.appendChild(thumb);
+
+          const urlInput = document.createElement('input');
+          urlInput.type = 'url';
+          urlInput.placeholder = 'URL image';
+          urlInput.value = s.imgEl.src;
+          urlInput.style.width = '100%';
+          urlInput.style.padding = '8px';
+          urlInput.style.border = '1px solid var(--line)';
+          urlInput.style.borderRadius = '10px';
+          row.appendChild(urlInput);
+
+          const durInput = document.createElement('input');
+          durInput.type = 'number';
+          durInput.min = '2000';
+          durInput.step = '500';
+          durInput.value = s.duration || defaultDuration;
+          durInput.title = 'Durée (ms)';
+          durInput.style.width = '110px';
+          durInput.style.padding = '8px';
+          durInput.style.border = '1px solid var(--line)';
+          durInput.style.borderRadius = '10px';
+          row.appendChild(durInput);
+
+          const btns = document.createElement('div');
+          btns.style.display = 'flex'; btns.style.gap = '8px';
+
+          const up = document.createElement('button'); up.className='btn'; up.textContent='↑';
+          const down = document.createElement('button'); down.className='btn'; down.textContent='↓';
+          const apply = document.createElement('button'); apply.className='btn btn-primary'; apply.textContent='Appliquer';
+          const del = document.createElement('button'); del.className='btn'; del.textContent='Retirer';
+
+          up.addEventListener('click', ()=>{
+            if (i<=0) return;
+            const temp = slides[i-1]; slides[i-1] = slides[i]; slides[i] = temp;
+            root.innerHTML=''; slides.forEach(ss=>root.appendChild(ss.imgEl));
+            renderAdminList();
+          });
+          down.addEventListener('click', ()=>{
+            if (i>=slides.length-1) return;
+            const temp = slides[i+1]; slides[i+1] = slides[i]; slides[i] = temp;
+            root.innerHTML=''; slides.forEach(ss=>root.appendChild(ss.imgEl));
+            renderAdminList();
+          });
+          apply.addEventListener('click', ()=>{
+            const wasActive = slides[i].imgEl.classList.contains('active');
+            slides[i].imgEl.classList.remove('active');
+            slides[i].imgEl.src = urlInput.value.trim() || slides[i].imgEl.src;
+            slides[i].duration = parseInt(durInput.value||defaultDuration,10);
+            if (wasActive) slides[i].imgEl.classList.add('active');
+          });
+          del.addEventListener('click', ()=>{
+            const wasActive = slides[i].imgEl.classList.contains('active');
+            slides[i].imgEl.remove();
+            slides.splice(i,1);
+            if (wasActive) { current = -1; stop(); if (slides.length>0){ slides[0].imgEl.classList.add('active'); current=0; start(); } }
+            renderAdminList();
+          });
+
+          btns.append(up,down,apply,del);
+          row.appendChild(btns);
+          listEl.appendChild(row);
+        });
+      }
+
+      // API publique
+      return {
+        add,
+        clear,
+        shuffle,
+        setDefaultDuration(ms){ defaultDuration = Math.max(2000, +ms||defaultDuration); },
+        _debug(){ return {slides, current}; }
+      };
+    })();
+
+    // Compat minimal avec anciens appels
+    function insertAnimatedImage(src){ SlideShow.add(src); }
+    function clearGallery(){ SlideShow.clear(); }
+    function applyAnimationToAll(){ /* sans objet ici, on gère par fondu */ }
+
+    // Panneau admin
     const addBtn = $('#add-btn');
     if (addBtn) {
       addBtn.addEventListener('click', ()=>{
         const url = $('#image-url')?.value.trim();
-        const anim = $('#anim-type')?.value || 'fade-in-up';
+        const dur = parseInt($('#slide-duration')?.value||'6000',10);
         const fileInput = $('#image-file');
         let src = url;
         if(fileInput?.files && fileInput.files[0]){
           src = URL.createObjectURL(fileInput.files[0]);
         }
         if(!src){ alert('Ajoutez une URL valide ou importez un fichier.'); return }
-        insertAnimatedImage(src, { animation: anim, duration: (anim==='float'? 5000:900), caption: fileInput?.files[0]?.name || '' });
+        SlideShow.setDefaultDuration(dur);
+        SlideShow.add(src, dur);
         if ($('#image-url')) $('#image-url').value = '';
         if (fileInput) fileInput.value = '';
       });
     }
+    const shuffleBtn = $('#shuffle-btn');
+    if (shuffleBtn) shuffleBtn.addEventListener('click', ()=> SlideShow.shuffle());
+    const clearBtn = $('#clear-btn');
+    if (clearBtn) clearBtn.addEventListener('click', ()=> SlideShow.clear());
 
-    /* ===== Séquence d'intro (optionnel) + boucle d'animations ===== */
+    // Séquence de démo (si aucun slide ajouté)
     document.addEventListener('DOMContentLoaded', ()=>{
-      const sequence = [
-        { src:"https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?auto=format&fit=crop&w=1200&q=60", anim:"float", dur:6000, cap:"Nébuleuse orange — lumière suspendue" },
-        { src:"https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1200&q=60", anim:"fade-in-up", dur:900, cap:"Silhouette dans la brume" },
-        { src:"https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=1200&q=60", anim:"glow", dur:3500, cap:"Reflets dorés" },
-      ];
-      clearGallery();
-      let t = 0, step = 500;
-      sequence.forEach(item=>{
-        setTimeout(()=> insertAnimatedImage(item.src,{animation:item.anim,duration:item.dur,caption:item.cap}), t);
-        t += step;
-      });
-      setTimeout(()=>{
-        setInterval(()=>{ applyAnimationToAll("glow", 3500); setTimeout(()=>applyAnimationToAll("float", 5000), 3600); }, 9000);
-      }, t+800);
+      if (!document.querySelector('#bg-slideshow img')) {
+        const demo = [
+          "https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?auto=format&fit=crop&w=1600&q=60",
+          "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1600&q=60",
+          "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=1600&q=60",
+        ];
+        demo.forEach(src => SlideShow.add(src, 6000));
+      }
     });
   </script>
 </body>
