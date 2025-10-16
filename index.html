@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gala Couleur 2026</title>
-  <meta name="description" content="Gala 2026 — Thème Couleur. Site one-page noir & orange avec galerie d’images animées." />
+  <meta name="description" content="Gala 2026 — Thème Couleur. Site one-page noir & orange avec galerie d’images animées (mode admin), séquence auto et RSVP." />
   <style>
     :root{
       --orange:#ff7a00; --orange-2:#ff9a3b; --black:#0c0c0d; --text:#f4f4f5; --muted:#c9c9ce;
@@ -82,6 +82,13 @@
     .spacer{height:24px}
     footer{border-top:1px solid rgba(255,122,0,.25);padding:20px 0 50px;color:var(--muted)}
     a.link{color:var(--orange-2)}
+
+    /* Badge Admin */
+    .admin-badge{
+      position:fixed; right:12px; bottom:12px; z-index:9999;
+      padding:8px 12px; border-radius:999px; border:1px solid rgba(255,122,0,.35);
+      background:#121213; box-shadow:var(--shadow); font-size:.9rem
+    }
   </style>
 </head>
 <body>
@@ -95,7 +102,8 @@
         <ul>
           <li><a href="#a-propos">À propos</a></li>
           <li><a href="#programme">Programme</a></li>
-          <li><a href="#galerie">Galerie animée</a></li>
+          <li><a href="#galerie">Galerie</a></li>
+          <li><a href="#rsvp">RSVP</a></li>
           <li><a href="#infos">Infos</a></li>
         </ul>
       </nav>
@@ -108,10 +116,10 @@
         <div>
           <span class="tag">Thème&nbsp;: <strong style="color:var(--orange-2)">Couleur</strong></span>
           <h1>Gala Couleur <span style="color:var(--orange-2)">2026</span></h1>
-          <p class="lead">Une expérience immersive où le noir profond rencontre l’orange incandescent. Performances, arts visuels, et une scénographie chromatique pour une soirée inoubliable.</p>
+          <p class="lead">Une expérience immersive où le noir profond rencontre l’orange incandescent. Performances, arts visuels, et scénographie chromatique pour une soirée inoubliable.</p>
           <div class="cta-row">
-            <a class="btn btn-primary" href="#galerie">Ajouter des images animées</a>
-            <a class="btn btn-ghost" href="#programme">Voir le programme</a>
+            <a class="btn btn-primary" href="#galerie">Voir la galerie</a>
+            <a class="btn btn-ghost" href="#rsvp">Confirmer ma venue</a>
           </div>
         </div>
         <div class="card" role="img" aria-label="Visuel abstrait orange et noir">
@@ -128,7 +136,7 @@
       <div class="container two-col">
         <div class="card">
           <h2>À propos</h2>
-          <p>Le Gala Couleur 2026 est une célébration des émotions visuelles. Le noir structure l’espace, l’orange enflamme l’atmosphère. Cette page vous permet aussi d’<strong>insérer vos propres images</strong> et de les <strong>animer en un clic</strong> pour les écrans et totems de la soirée.</p>
+          <p>Le Gala Couleur 2026 célèbre les émotions visuelles. Le noir structure l’espace, l’orange enflamme l’atmosphère. La galerie ci-dessous peut être <strong>augmentée en mode admin</strong> pour préparer les écrans de la soirée.</p>
         </div>
         <div class="card">
           <h2>Couleurs</h2>
@@ -154,8 +162,10 @@
 
     <section id="galerie">
       <div class="container">
-        <h2>Galerie animée — ajoutez vos images</h2>
-        <div class="card" style="margin-bottom:14px">
+        <h2>Galerie</h2>
+
+        <!-- PANNEAU D'UPLOAD — visible uniquement en mode admin -->
+        <div class="card admin-only" style="margin-bottom:14px">
           <div class="panel">
             <div>
               <label for="image-url" class="muted">URL de l’image (JPG, PNG, GIF, WebP, APNG)</label>
@@ -179,27 +189,82 @@
               <button id="add-btn" class="btn btn-primary" type="button">Ajouter</button>
             </div>
           </div>
-          <small class="muted">Astuce&nbsp;: vous pouvez combiner les effets (ajoutez l’image plusieurs fois avec des animations différentes, ou utilisez les contrôles avancés ci-dessous).</small>
+          <small class="muted">Astuce&nbsp;: ajoute la même image avec des animations différentes pour un rendu scénique.</small>
         </div>
 
         <div class="gallery-wrap" id="gallery" aria-live="polite"></div>
 
         <div class="spacer"></div>
-        <div class="card">
+
+        <!-- CONTROLES AVANCES — visible uniquement en mode admin -->
+        <div class="card admin-only">
           <details>
-            <summary><strong>Contrôles avancés (JS)</strong> — Ajouter des images par code</summary>
+            <summary><strong>Contrôles avancés (JS)</strong></summary>
             <pre style="white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color:#ffead9; background:#0f0f10; padding:12px; border-radius:12px; border:1px solid rgba(255,122,0,.25);">
-// Insérer une image avec animation et durée personnalisée
-insertAnimatedImage("https://images.unsplash.com/photo-1511506243460-7953b62d4dae?auto=format&fit=crop&w=1200&q=60", { animation: "float", duration: 6000, caption: "Affiche animée" })
-
-// Retirer toutes les images
-clearGallery()
-
-// Appliquer une animation à toutes les figures existantes
-applyAnimationToAll("glow", 3500)
+// Exemple : insérer une image custom
+insertAnimatedImage("https://images.unsplash.com/photo-1511506243460-7953b62d4dae?auto=format&fit=crop&w=1200&q=60", { animation: "float", duration: 6000, caption: "Affiche animée" });
+// Tout retirer
+clearGallery();
+// Appliquer une animation globale
+applyAnimationToAll("glow", 3500);
             </pre>
           </details>
         </div>
+      </div>
+    </section>
+
+    <!-- RSVP -->
+    <section id="rsvp">
+      <div class="container">
+        <h2>RSVP</h2>
+        <form action="https://formspree.io/f/XXXX-REMPLACEZ-PAR-VOTRE-ID-XXXX" method="POST" class="card" style="display:grid;gap:12px;max-width:760px">
+          <div class="two-col" style="grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <label class="muted">Prénom</label>
+              <input name="prenom" required style="width:100%;padding:11px;border-radius:12px;border:1px solid rgba(255,122,0,.35);background:#131314;color:#f4f4f5">
+            </div>
+            <div>
+              <label class="muted">Nom</label>
+              <input name="nom" required style="width:100%;padding:11px;border-radius:12px;border:1px solid rgba(255,122,0,.35);background:#131314;color:#f4f4f5">
+            </div>
+          </div>
+
+          <div>
+            <label class="muted">E-mail</label>
+            <input type="email" name="email" required style="width:100%;padding:11px;border-radius:12px;border:1px solid rgba(255,122,0,.35);background:#131314;color:#f4f4f5">
+          </div>
+
+          <div class="two-col" style="grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <label class="muted">Présence</label>
+              <select name="presence" required style="width:100%;padding:11px;border-radius:12px;border:1px solid rgba(255,122,0,.35);background:#131314;color:#f4f4f5">
+                <option value="Oui">Oui, je viens</option>
+                <option value="Non">Non, désolé·e</option>
+                <option value="Peut-être">Peut-être</option>
+              </select>
+            </div>
+            <div>
+              <label class="muted">Nombre d’accompagnants</label>
+              <input type="number" name="guests" min="0" value="0" style="width:100%;padding:11px;border-radius:12px;border:1px solid rgba(255,122,0,.35);background:#131314;color:#f4f4f5">
+            </div>
+          </div>
+
+          <div>
+            <label class="muted">Message (optionnel)</label>
+            <textarea name="message" rows="3" style="width:100%;padding:11px;border-radius:12px;border:1px solid rgba(255,122,0,.35);background:#131314;color:#f4f4f5"></textarea>
+          </div>
+
+          <!-- Réglages Formspree -->
+          <input type="hidden" name="_subject" value="RSVP — Gala Couleur 2026">
+          <input type="hidden" name="_captcha" value="false">
+          <!-- Option : page de remerciement -->
+          <!-- <input type="hidden" name="_next" value="https://TON-DOMAINE/merci.html"> -->
+          <!-- Anti-spam (honeypot) -->
+          <input type="text" name="_honey" style="display:none">
+
+          <button class="btn btn-primary" type="submit">Envoyer l’RSVP</button>
+          <small class="muted">En soumettant, vous acceptez d’être contacté·e concernant le Gala 2026.</small>
+        </form>
       </div>
     </section>
 
@@ -209,7 +274,7 @@ applyAnimationToAll("glow", 3500)
           <h2>Infos pratiques</h2>
           <ul>
             <li>Tenue&nbsp;: chic, avec touche <strong>orange</strong></li>
-            <li>Accessibilité&nbsp;: site pensé pour être lisible (contrastes élevés)</li>
+            <li>Accessibilité&nbsp;: contrastes élevés, police système</li>
             <li>Technique&nbsp;: galerie compatible GIF/APNG/WebP (animations natives conservées)</li>
           </ul>
         </div>
@@ -229,9 +294,31 @@ applyAnimationToAll("glow", 3500)
   </footer>
 
   <script>
+    // ===== Utilitaires courtes
     const $ = (sel, root=document) => root.querySelector(sel);
     const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
+    // ===== Mode admin (URL ?admin=1 -> mémorisé)
+    (function adminGate(){
+      const params = new URLSearchParams(location.search);
+      const isAdmin = params.get('admin') === '1' || localStorage.getItem('gc_admin') === '1';
+      if (isAdmin) {
+        localStorage.setItem('gc_admin', '1');
+        const badge = document.createElement('div');
+        badge.className = 'admin-badge badge';
+        badge.innerHTML = '🔒 Mode admin actif — <a class="link" href="#" id="logout-admin">désactiver</a>';
+        document.body.appendChild(badge);
+        $('#logout-admin').addEventListener('click', (e) => {
+          e.preventDefault();
+          localStorage.removeItem('gc_admin');
+          location.href = location.pathname; // recharge sans ?admin
+        });
+      } else {
+        $$('.admin-only').forEach(el => el.remove());
+      }
+    })();
+
+    // ===== Galerie (API front)
     const ANIM_CLASS = {
       'fade-in-up':'anim-fade-in-up',
       'float':'anim-float',
@@ -281,7 +368,7 @@ applyAnimationToAll("glow", 3500)
     }
     window.insertAnimatedImage = insertAnimatedImage;
 
-    function clearGallery(){ $('#gallery').innerHTML = '' }
+    function clearGallery(){ const g=$('#gallery'); if(g) g.innerHTML = '' }
     window.clearGallery = clearGallery;
 
     function applyAnimationToAll(animation='glow', duration=3000){
@@ -293,23 +380,56 @@ applyAnimationToAll("glow", 3500)
     }
     window.applyAnimationToAll = applyAnimationToAll;
 
-    $('#add-btn').addEventListener('click', ()=>{
-      const url = $('#image-url').value.trim();
-      const anim = $('#anim-type').value;
-      const fileInput = $('#image-file');
-      let src = url;
-      if(fileInput.files && fileInput.files[0]){
-        src = URL.createObjectURL(fileInput.files[0]);
-      }
-      if(!src){ alert('Ajoutez une URL valide ou importez un fichier.'); return }
-      insertAnimatedImage(src, { animation: anim, duration: (anim==='float'? 5000:900), caption: fileInput.files[0]?.name || '' });
-      $('#image-url').value = ''; fileInput.value = '';
-    });
+    // ===== Formulaire d'ajout (admin)
+    const addBtn = $('#add-btn');
+    if (addBtn) {
+      addBtn.addEventListener('click', ()=>{
+        const url = $('#image-url')?.value.trim();
+        const anim = $('#anim-type')?.value || 'fade-in-up';
+        const fileInput = $('#image-file');
+        let src = url;
+        if(fileInput?.files && fileInput.files[0]){
+          src = URL.createObjectURL(fileInput.files[0]);
+        }
+        if(!src){ alert('Ajoutez une URL valide ou importez un fichier.'); return }
+        insertAnimatedImage(src, { animation: anim, duration: (anim==='float'? 5000:900), caption: fileInput?.files[0]?.name || '' });
+        if ($('#image-url')) $('#image-url').value = '';
+        if (fileInput) fileInput.value = '';
+      });
+    }
 
+    // ===== Séquence automatisée (intro) + boucle d'animations
     document.addEventListener('DOMContentLoaded', ()=>{
-      insertAnimatedImage('https://images.unsplash.com/photo-1482192505345-5655af888cc4?auto=format&fit=crop&w=1200&q=60', { animation:'fade-in-up', duration:900, caption:'Lumières' });
-      insertAnimatedImage('https://images.unsplash.com/photo-1511506243460-7953b62d4dae?auto=format&fit=crop&w=1200&q=60', { animation:'float', duration:5000, caption:'Scène' });
-      insertAnimatedImage('https://images.unsplash.com/photo-1516306580123-e6e52b1b7bff?auto=format&fit=crop&w=1200&q=60', { animation:'glow', duration:3500, caption:'Textures' });
+      // 1) Séquence d'apparition des images (une à une)
+      const sequence = [
+        { src:"https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?auto=format&fit=crop&w=1200&q=60", anim:"float", dur:6000, cap:"Nébuleuse orange — lumière suspendue" },
+        { src:"https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1200&q=60", anim:"fade-in-up", dur:900, cap:"Silhouette dans la brume — entrée des invités" },
+        { src:"https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=1200&q=60", anim:"glow", dur:3500, cap:"Reflets dorés sur le parquet" },
+        { src:"https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=60", anim:"spin", dur:10000, cap:"Projecteur rotatif — lumière astrale" },
+        { src:"https://images.unsplash.com/photo-1520975918318-3e3c5f63ae9b?auto=format&fit=crop&w=1200&q=60", anim:"float", dur:7000, cap:"Bulles de couleur flottant dans l’air" },
+        { src:"https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&w=1200&q=60", anim:"fade-in-up", dur:1200, cap:"Table dressée — velours de lumière" },
+        { src:"https://images.unsplash.com/photo-1516306580123-e6e52b1b7bff?auto=format&fit=crop&w=1200&q=60", anim:"glow", dur:4000, cap:"Mur LED — pulsations lumineuses" },
+        { src:"https://images.unsplash.com/photo-1520975698519-59c1c6bde3a8?auto=format&fit=crop&w=1200&q=60", anim:"slide-in", dur:1300, cap:"Danseuse traversant le faisceau" },
+        { src:"https://images.unsplash.com/photo-1519659528534-8a1c1f9bfa5b?auto=format&fit=crop&w=1200&q=60", anim:"spin", dur:12000, cap:"Spirale d’éclats — final" },
+      ];
+
+      clearGallery();
+      let t = 0;
+      const step = 550; // délai entre apparitions
+      sequence.forEach((item, i)=>{
+        setTimeout(()=>{
+          insertAnimatedImage(item.src, { animation:item.anim, duration:item.dur, caption:item.cap });
+        }, t);
+        t += step;
+      });
+
+      // 2) Boucle : alterner halo <-> flottement sur toutes les images
+      setTimeout(()=>{
+        setInterval(() => {
+          applyAnimationToAll("glow", 3500);
+          setTimeout(() => applyAnimationToAll("float", 5000), 3600);
+        }, 9000);
+      }, t + 800); // démarre la boucle après la fin de la séquence
     });
   </script>
 </body>
