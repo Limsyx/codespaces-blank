@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gala Couleur 2026</title>
-  <meta name="description" content="Gala 2026 — Fond d'écran diaporama en fondu + admin upload + RSVP." />
+  <meta name="description" content="Gala 2026 — Fond d'écran diaporama en fondu + admin sécurisé par PIN + RSVP." />
   <style>
     :root{
       --orange:#ff7a00; --orange-2:#ff9a3b; --ink:#0c0c0d; --muted:#5a5a60; --line:#ececf0;
@@ -12,35 +12,25 @@
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{
-      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans";
-      color:var(--ink); background:#fff; line-height:1.55;
-    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans";color:var(--ink);background:#fff;line-height:1.55}
 
-    /* ===== Fond diaporama (derrière toute la page) ===== */
-    #bg-slideshow{
-      position:fixed; inset:0; z-index:-2; overflow:hidden; background:#000;
-    }
+    /* ===== Fond diaporama (plein écran derrière tout) ===== */
+    #bg-slideshow{position:fixed;inset:0;z-index:-2;overflow:hidden;background:#000}
     #bg-slideshow img{
-      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-      opacity:0; transition:opacity 1.2s ease;
-      filter: saturate(1.05) contrast(1.05);
+      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+      opacity:0;transition:opacity 1.2s ease;filter:saturate(1.05) contrast(1.05)
     }
-    #bg-slideshow img.active{ opacity:1; }
+    #bg-slideshow img.active{opacity:1}
 
     /* Voile blanc pour lisibilité du contenu */
     .page-overlay{
-      position:fixed; inset:0; z-index:-1; pointer-events:none;
-      background: rgba(255,255,255,.78);
-      backdrop-filter: blur(2px);
+      position:fixed;inset:0;z-index:-1;pointer-events:none;
+      background:rgba(255,255,255,.72); /* voile légèrement plus transparent */
+      backdrop-filter:blur(1.5px)
     }
 
     .container{width:min(1100px,92vw);margin:0 auto}
-    header{
-      position:sticky; top:0; z-index:10; background:rgba(255,255,255,.85);
-      backdrop-filter: saturate(1.1) blur(8px);
-      border-bottom:1px solid var(--line);
-    }
+    header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.9);backdrop-filter:saturate(1.1) blur(8px);border-bottom:1px solid var(--line)}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
     .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800}
     .brand-badge{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--orange),var(--orange-2));box-shadow:var(--shadow);display:grid;place-items:center;color:#fff;font-weight:900}
@@ -66,9 +56,10 @@
     .tl-item{margin:12px 0}
     .tl-item strong{color:var(--orange)}
 
-    /* Panneau admin (ajout de slides) */
     .panel{display:grid;gap:12px;align-items:end;grid-template-columns:1.2fr .8fr .8fr auto}
-    .panel input[type="url"], .panel input[type="file"], .panel select{width:100%;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+    .panel input[type="url"], .panel input[type="file"], .panel input[type="number"], .panel select{
+      width:100%;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink)
+    }
     @media (max-width:950px){.panel{grid-template-columns:1fr}}
 
     .muted{color:var(--muted)}
@@ -81,11 +72,7 @@
     .btn-ghost{background:#fff;color:var(--ink)}
 
     /* Badge Admin */
-    .admin-badge{
-      position:fixed; right:12px; bottom:12px; z-index:9999;
-      padding:8px 12px; border-radius:999px; border:1px solid var(--line);
-      background:#fff; box-shadow:var(--shadow); font-size:.9rem
-    }
+    .admin-badge{position:fixed;right:12px;bottom:12px;z-index:9999;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow);font-size:.9rem}
   </style>
 </head>
 <body>
@@ -117,7 +104,7 @@
         <div>
           <span class="tag">Thème&nbsp;: <strong class="accent">Couleur</strong></span>
           <h1>Gala Couleur <span class="accent">2026</span></h1>
-          <p class="lead">Fond d’écran en diaporama (fondu successif), texte noir lisible, accents orange, et panneau d’upload en mode admin.</p>
+          <p class="lead">Fond d’écran diaporama en <em>fondu</em>. Contrôles d’upload <strong>réservés à l’admin par PIN</strong>.</p>
           <div class="cta-row">
             <a class="btn btn-primary" href="#galerie">Configurer le fond (admin)</a>
             <a class="btn btn-ghost" href="#rsvp">Confirmer ma venue</a>
@@ -125,7 +112,7 @@
         </div>
         <div class="card" role="img" aria-label="Présentation">
           <div class="badge" style="margin-bottom:10px">⚡ Ambiance</div>
-          <p class="muted" style="margin:0">Fond animé par diaporama. Vous pouvez ajouter vos visuels (admin).</p>
+          <p class="muted" style="margin:0">Le contenu est lisible grâce à un voile blanc léger, les images restent derrière la page.</p>
           <div class="spacer"></div>
           <div class="badge">📍 Lieu</div>
           <p style="margin:6px 0 0">À préciser — 2026</p>
@@ -137,7 +124,7 @@
       <div class="container two-col">
         <div class="card">
           <h2>À propos</h2>
-          <p>Le fond plein écran change automatiquement par fondu. Le contenu reste lisible grâce à un voile blanc léger.</p>
+          <p>Le fond plein écran change automatiquement par fondu. Le lien public n’expose <strong>aucun</strong> contrôle admin.</p>
         </div>
         <div class="card">
           <h2>Couleurs</h2>
@@ -145,7 +132,6 @@
             <li><strong>Orange</strong> — accent, chaleur, énergie</li>
             <li><strong>Noir</strong> — texte, élégance, contraste</li>
           </ul>
-          <!-- Codes couleurs retirés de l'UI -->
         </div>
       </div>
     </section>
@@ -185,10 +171,7 @@
               <button id="add-btn" class="btn btn-primary" type="button">Ajouter au fond</button>
             </div>
           </div>
-          <small class="muted">
-            Astuce : ajoute plusieurs images — elles défileront automatiquement en fondu.  
-            <br/>Utilise <code>?admin=1</code> pour afficher ce panneau, et “désactiver” via le badge.
-          </small>
+          <small class="muted">Astuce : ajoute plusieurs images — elles défileront en fondu.</small>
         </div>
 
         <div class="card admin-only" id="slides-admin">
@@ -200,7 +183,6 @@
             <button class="btn" id="clear-btn" type="button">Tout retirer</button>
           </details>
         </div>
-
       </div>
     </section>
 
@@ -263,7 +245,7 @@
           <ul>
             <li>Fond animé en diaporama (fondu)</li>
             <li>Lisibilité : voile blanc + texte noir</li>
-            <li>Admin : <code>?admin=1</code> pour gérer les images</li>
+            <li>Admin : ajouter **?admin=9426** à l’URL pour gérer les images</li>
           </ul>
         </div>
         <div class="card">
@@ -277,58 +259,71 @@
 
   <footer>
     <div class="container">
-      © 2026 Gala Couleur — Fond diaporama en fondu, admin upload & RSVP.
+      © 2026 Gala Couleur — Fond diaporama en fondu, admin PIN & RSVP.
     </div>
   </footer>
 
   <script>
     /* ===== Helpers ===== */
-    const $ = (sel, root=document) => root.querySelector(sel);
-    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+    function $(sel, root){ return (root||document).querySelector(sel); }
+    function $$(sel, root){ return Array.prototype.slice.call((root||document).querySelectorAll(sel)); }
 
-    /* ===== Admin Gate (URL ?admin=1) ===== */
+    /* ===== Admin Gate (PIN dans l’URL) =====
+       - Lien public: https://…/ (rien n’apparaît)
+       - Lien admin : https://…/?admin=9426 (panneaux visibles)
+    */
     (function adminGate(){
-      const params = new URLSearchParams(location.search);
-      const isAdmin = params.get('admin') === '1' || localStorage.getItem('gc_admin') === '1';
+      var ADMIN_PIN = "9426"; // <<< change-le si tu veux
+      var params = new URLSearchParams(location.search);
+      var isAdmin = params.get('admin') === ADMIN_PIN;
       if (isAdmin) {
-        localStorage.setItem('gc_admin', '1');
-        const badge = document.createElement('div');
+        var badge = document.createElement('div');
         badge.className = 'admin-badge badge';
-        badge.innerHTML = '🔒 Mode admin actif — <a class="link" href="#" id="logout-admin">désactiver</a>';
+        badge.innerHTML = '🔒 Mode admin — <a class="link" href="#" id="logout-admin">masquer</a>';
         document.body.appendChild(badge);
-        $('#logout-admin').addEventListener('click', (e) => {
+        $('#logout-admin').addEventListener('click', function(e){
           e.preventDefault();
-          localStorage.removeItem('gc_admin');
-          location.href = location.pathname;
+          // retire le paramètre admin de l’URL
+          var base = location.origin + location.pathname + location.hash;
+          location.replace(base);
         });
       } else {
-        $$('.admin-only').forEach(el => el.remove());
+        $$('.admin-only').forEach(function(el){ el.remove(); });
       }
     })();
 
     /* ===== Diaporama plein écran (fondu) ===== */
-    const SlideShow = (() => {
-      const root = $('#bg-slideshow');
-      const slides = [];           // {imgEl, duration}
-      let current = -1;
-      let timer = null;
-      let defaultDuration = 6000;  // ms, peut être changé via input
+    var SlideShow = (function () {
+      var root = $('#bg-slideshow');
+      var slides = [];           // {imgEl, duration}
+      var current = -1;
+      var timer = null;
+      var defaultDuration = 6000;  // ms
+
+      // image fallback si aucune image n’a été ajoutée
+      var FALLBACKS = [
+        "https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?auto=format&fit=crop&w=1600&q=60",
+        "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1600&q=60",
+        "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=1600&q=60"
+      ];
 
       function add(src, duration){
-        const img = new Image();
+        if (!root) return null;
+        var img = new Image();
         img.decoding = 'async';
         img.loading = 'lazy';
-        img.style.opacity = '0';
         img.alt = 'Fond diaporama';
-        img.addEventListener('error', ()=> img.remove());
+        img.style.opacity = '0';
+        img.addEventListener('error', function(){ img.remove(); });
         img.src = src;
         root.appendChild(img);
-        slides.push({ imgEl: img, duration: duration || defaultDuration });
+        slides.push({ imgEl: img, duration: Number(duration) || defaultDuration });
+
+        // Si c'est la première image, l'afficher
         if (slides.length === 1) {
-          // première image -> afficher
           img.classList.add('active');
           current = 0;
-          start();
+          schedule();
         }
         renderAdminList();
         return img;
@@ -336,26 +331,27 @@
 
       function clear(){
         slides.splice(0, slides.length);
-        root.innerHTML = '';
+        if (root) root.innerHTML = '';
         stop();
         current = -1;
         renderAdminList();
       }
 
       function shuffle(){
-        for (let i = slides.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [slides[i], slides[j]] = [slides[j], slides[i]];
+        for (var i = slides.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = slides[i]; slides[i] = slides[j]; slides[j] = tmp;
         }
-        // Réorganiser l'ordre dans le DOM
-        root.innerHTML = '';
-        slides.forEach(s => root.appendChild(s.imgEl));
+        if (root){
+          root.innerHTML = '';
+          slides.forEach(function(s){ root.appendChild(s.imgEl); });
+        }
         renderAdminList();
       }
 
       function next(){
         if (slides.length === 0) return;
-        const prev = current;
+        var prev = current;
         current = (current + 1) % slides.length;
         if (prev !== -1) slides[prev].imgEl.classList.remove('active');
         slides[current].imgEl.classList.add('active');
@@ -365,24 +361,18 @@
       function schedule(){
         stop();
         if (slides.length === 0) return;
-        const dur = slides[current].duration || defaultDuration;
+        var dur = slides[current].duration || defaultDuration;
         timer = setTimeout(next, dur);
       }
-      function start(){
-        stop();
-        if (slides.length > 0) timer = setTimeout(next, slides[current].duration || defaultDuration);
-      }
-      function stop(){
-        if (timer) { clearTimeout(timer); timer = null; }
-      }
+      function stop(){ if (timer){ clearTimeout(timer); timer = null; } }
 
-      // Admin: liste & actions
-      const listEl = $('#slides-list');
+      // Admin list
+      var listEl = $('#slides-list');
       function renderAdminList(){
         if (!listEl) return;
         listEl.innerHTML = '';
-        slides.forEach((s, i) => {
-          const row = document.createElement('div');
+        slides.forEach(function(s, i){
+          var row = document.createElement('div');
           row.style.display = 'grid';
           row.style.gridTemplateColumns = '60px 1fr auto auto';
           row.style.alignItems = 'center';
@@ -392,7 +382,7 @@
           row.style.borderRadius = '10px';
           row.style.background = '#fff';
 
-          const thumb = document.createElement('img');
+          var thumb = document.createElement('img');
           thumb.src = s.imgEl.src;
           thumb.style.width = '60px';
           thumb.style.height = '40px';
@@ -400,117 +390,101 @@
           thumb.style.borderRadius = '8px';
           row.appendChild(thumb);
 
-          const urlInput = document.createElement('input');
-          urlInput.type = 'url';
-          urlInput.placeholder = 'URL image';
-          urlInput.value = s.imgEl.src;
-          urlInput.style.width = '100%';
-          urlInput.style.padding = '8px';
-          urlInput.style.border = '1px solid var(--line)';
-          urlInput.style.borderRadius = '10px';
+          var urlInput = document.createElement('input');
+          urlInput.type = 'url'; urlInput.placeholder = 'URL image'; urlInput.value = s.imgEl.src;
+          urlInput.style.width = '100%'; urlInput.style.padding = '8px';
+          urlInput.style.border = '1px solid var(--line)'; urlInput.style.borderRadius = '10px';
           row.appendChild(urlInput);
 
-          const durInput = document.createElement('input');
-          durInput.type = 'number';
-          durInput.min = '2000';
-          durInput.step = '500';
-          durInput.value = s.duration || defaultDuration;
-          durInput.title = 'Durée (ms)';
-          durInput.style.width = '110px';
-          durInput.style.padding = '8px';
-          durInput.style.border = '1px solid var(--line)';
-          durInput.style.borderRadius = '10px';
+          var durInput = document.createElement('input');
+          durInput.type = 'number'; durInput.min = '2000'; durInput.step = '500';
+          durInput.value = s.duration || defaultDuration; durInput.title = 'Durée (ms)';
+          durInput.style.width = '110px'; durInput.style.padding = '8px';
+          durInput.style.border = '1px solid var(--line)'; durInput.style.borderRadius = '10px';
           row.appendChild(durInput);
 
-          const btns = document.createElement('div');
-          btns.style.display = 'flex'; btns.style.gap = '8px';
+          var btns = document.createElement('div'); btns.style.display='flex'; btns.style.gap='8px';
 
-          const up = document.createElement('button'); up.className='btn'; up.textContent='↑';
-          const down = document.createElement('button'); down.className='btn'; down.textContent='↓';
-          const apply = document.createElement('button'); apply.className='btn btn-primary'; apply.textContent='Appliquer';
-          const del = document.createElement('button'); del.className='btn'; del.textContent='Retirer';
+          var up = document.createElement('button'); up.className='btn'; up.textContent='↑';
+          var down = document.createElement('button'); down.className='btn'; down.textContent='↓';
+          var apply = document.createElement('button'); apply.className='btn btn-primary'; apply.textContent='Appliquer';
+          var del = document.createElement('button'); del.className='btn'; del.textContent='Retirer';
 
-          up.addEventListener('click', ()=>{
-            if (i<=0) return;
-            const temp = slides[i-1]; slides[i-1] = slides[i]; slides[i] = temp;
-            root.innerHTML=''; slides.forEach(ss=>root.appendChild(ss.imgEl));
-            renderAdminList();
-          });
-          down.addEventListener('click', ()=>{
-            if (i>=slides.length-1) return;
-            const temp = slides[i+1]; slides[i+1] = slides[i]; slides[i] = temp;
-            root.innerHTML=''; slides.forEach(ss=>root.appendChild(ss.imgEl));
-            renderAdminList();
-          });
-          apply.addEventListener('click', ()=>{
-            const wasActive = slides[i].imgEl.classList.contains('active');
+          up.addEventListener('click', function(){ if (i<=0) return; var tmp=slides[i-1]; slides[i-1]=slides[i]; slides[i]=tmp; if(root){ root.innerHTML=''; slides.forEach(function(ss){root.appendChild(ss.imgEl);}); } renderAdminList(); });
+          down.addEventListener('click', function(){ if (i>=slides.length-1) return; var tmp=slides[i+1]; slides[i+1]=slides[i]; slides[i]=tmp; if(root){ root.innerHTML=''; slides.forEach(function(ss){root.appendChild(ss.imgEl);}); } renderAdminList(); });
+          apply.addEventListener('click', function(){
+            var wasActive = slides[i].imgEl.classList.contains('active');
             slides[i].imgEl.classList.remove('active');
-            slides[i].imgEl.src = urlInput.value.trim() || slides[i].imgEl.src;
+            var newUrl = (urlInput.value||'').trim();
+            if (newUrl) slides[i].imgEl.src = newUrl;
             slides[i].duration = parseInt(durInput.value||defaultDuration,10);
             if (wasActive) slides[i].imgEl.classList.add('active');
           });
-          del.addEventListener('click', ()=>{
-            const wasActive = slides[i].imgEl.classList.contains('active');
+          del.addEventListener('click', function(){
+            var wasActive = slides[i].imgEl.classList.contains('active');
             slides[i].imgEl.remove();
             slides.splice(i,1);
-            if (wasActive) { current = -1; stop(); if (slides.length>0){ slides[0].imgEl.classList.add('active'); current=0; start(); } }
+            if (wasActive){
+              current = -1; stop();
+              if (slides.length>0){ slides[0].imgEl.classList.add('active'); current=0; schedule(); }
+            }
             renderAdminList();
           });
 
-          btns.append(up,down,apply,del);
+          btns.appendChild(up); btns.appendChild(down); btns.appendChild(apply); btns.appendChild(del);
           row.appendChild(btns);
           listEl.appendChild(row);
         });
       }
 
+      function ensureFallbackIfEmpty(){
+        if (slides.length === 0){
+          for (var k=0;k<FALLBACKS.length;k++){ add(FALLBACKS[k], defaultDuration); }
+        }
+      }
+
       // API publique
       return {
-        add,
-        clear,
-        shuffle,
-        setDefaultDuration(ms){ defaultDuration = Math.max(2000, +ms||defaultDuration); },
-        _debug(){ return {slides, current}; }
+        add: add,
+        clear: clear,
+        shuffle: shuffle,
+        setDefaultDuration: function(ms){ defaultDuration = Math.max(2000, Number(ms)||defaultDuration); },
+        ensureFallbackIfEmpty: ensureFallbackIfEmpty
       };
     })();
 
-    // Compat minimal avec anciens appels
-    function insertAnimatedImage(src){ SlideShow.add(src); }
-    function clearGallery(){ SlideShow.clear(); }
-    function applyAnimationToAll(){ /* sans objet ici, on gère par fondu */ }
+    // Panneau admin (ajout)
+    (function wireAdmin(){
+      var addBtn = $('#add-btn');
+      if (addBtn) {
+        addBtn.addEventListener('click', function(){
+          var urlInput = $('#image-url');
+          var durInput = $('#slide-duration');
+          var fileInput = $('#image-file');
 
-    // Panneau admin
-    const addBtn = $('#add-btn');
-    if (addBtn) {
-      addBtn.addEventListener('click', ()=>{
-        const url = $('#image-url')?.value.trim();
-        const dur = parseInt($('#slide-duration')?.value||'6000',10);
-        const fileInput = $('#image-file');
-        let src = url;
-        if(fileInput?.files && fileInput.files[0]){
-          src = URL.createObjectURL(fileInput.files[0]);
-        }
-        if(!src){ alert('Ajoutez une URL valide ou importez un fichier.'); return }
-        SlideShow.setDefaultDuration(dur);
-        SlideShow.add(src, dur);
-        if ($('#image-url')) $('#image-url').value = '';
-        if (fileInput) fileInput.value = '';
-      });
-    }
-    const shuffleBtn = $('#shuffle-btn');
-    if (shuffleBtn) shuffleBtn.addEventListener('click', ()=> SlideShow.shuffle());
-    const clearBtn = $('#clear-btn');
-    if (clearBtn) clearBtn.addEventListener('click', ()=> SlideShow.clear());
+          var url = urlInput ? (urlInput.value||'').trim() : '';
+          var dur = durInput ? parseInt(durInput.value||'6000',10) : 6000;
+          var src = url;
 
-    // Séquence de démo (si aucun slide ajouté)
-    document.addEventListener('DOMContentLoaded', ()=>{
-      if (!document.querySelector('#bg-slideshow img')) {
-        const demo = [
-          "https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?auto=format&fit=crop&w=1600&q=60",
-          "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1600&q=60",
-          "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=1600&q=60",
-        ];
-        demo.forEach(src => SlideShow.add(src, 6000));
+          if (fileInput && fileInput.files && fileInput.files[0]){
+            src = URL.createObjectURL(fileInput.files[0]);
+          }
+          if (!src){ alert('Ajoutez une URL valide ou importez un fichier.'); return; }
+
+          SlideShow.setDefaultDuration(dur);
+          SlideShow.add(src, dur);
+
+          if (urlInput) urlInput.value = '';
+          if (fileInput) fileInput.value = '';
+        });
       }
+      var shuffleBtn = $('#shuffle-btn'); if (shuffleBtn) shuffleBtn.addEventListener('click', function(){ SlideShow.shuffle(); });
+      var clearBtn = $('#clear-btn'); if (clearBtn) clearBtn.addEventListener('click', function(){ SlideShow.clear(); });
+    })();
+
+    // Démarrage : si aucun slide ajouté, insérer la fallback
+    document.addEventListener('DOMContentLoaded', function(){
+      SlideShow.ensureFallbackIfEmpty();
     });
   </script>
 </body>
