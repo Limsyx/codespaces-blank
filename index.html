@@ -1,37 +1,316 @@
-
-<!index html>
+<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gala Couleur 2026</title>
-  <meta name="description" content="Gala 2026 — Thème Couleur. Site one‑page noir & orange avec galerie d’images animées." />
+  <meta name="description" content="Gala 2026 — Thème Couleur. Site one-page noir & orange avec galerie d’images animées." />
   <style>
-    :root {
-      --orange: #ff7a00;
-      --orange-2: #ff9a3b;
-      --black: #0c0c0d;
-      --grey: #1a1a1b;
-      --text: #f4f4f5;
-      --muted: #c9c9ce;
-      --radius: 16px;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    :root{
+      --orange:#ff7a00; --orange-2:#ff9a3b; --black:#0c0c0d; --text:#f4f4f5; --muted:#c9c9ce;
+      --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.35)
     }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--text);
-      background: radial-gradient(1200px 600px at 70% -10%, rgba(255,122,0,.18), transparent 60%),
-                  radial-gradient(1000px 500px at 0% 110%, rgba(255,122,0,.12), transparent 60%),
-                  var(--black);
-      line-height: 1.55;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 70% -10%, rgba(255,122,0,.18), transparent 60%),
+        radial-gradient(1000px 500px at 0% 110%, rgba(255,122,0,.12), transparent 60%),
+        var(--black);
+      line-height:1.55
     }
+    .container{width:min(1100px,92vw);margin:0 auto}
+    header{position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);
+      background:linear-gradient(180deg, rgba(12,12,13,.8), rgba(12,12,13,.35));
+      border-bottom:1px solid rgba(255,122,0,.25)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700;letter-spacing:.3px}
+    .brand-badge{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--orange),var(--orange-2));box-shadow:var(--shadow);display:grid;place-items:center;font-weight:900}
+    .brand-badge span{color:#0d0d0e}
+    .nav a{color:var(--text);text-decoration:none;opacity:.9}
+    .nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0}
+
+    .hero{padding:64px 0 36px}
+    .hero-inner{display:grid;gap:24px;align-items:center;grid-template-columns:1.2fr .8fr}
+    .tag{display:inline-block;padding:6px 10px;border:1px solid rgba(255,122,0,.4);border-radius:999px;color:var(--muted);font-size:.9rem}
+    h1{font-size:clamp(2rem,3vw + 1rem,3.25rem);margin:10px 0 8px;line-height:1.1}
+    .lead{font-size:clamp(1rem,.6vw + .8rem,1.15rem);color:#e8e8ea;opacity:.92}
+
+    .card{background:linear-gradient(180deg, rgba(255,122,0,.07), rgba(255,122,0,.0));
+      border:1px solid rgba(255,122,0,.25); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+    .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+    .btn{appearance:none;border:none;cursor:pointer;font-weight:700;letter-spacing:.3px;padding:12px 18px;border-radius:12px;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+    .btn-primary{background:linear-gradient(135deg,var(--orange),var(--orange-2));color:#0d0d0e;box-shadow:0 8px 18px rgba(255,122,0,.35)}
+    .btn-primary:hover{transform:translateY(-2px)}
+    .btn-ghost{background:transparent;color:var(--text);border:1px solid rgba(255,122,0,.35)}
+
+    section{padding:36px 0}
+    section h2{font-size:clamp(1.4rem,2.2vw + .6rem,2rem);margin:0 0 14px}
+    .two-col{display:grid;gap:18px;grid-template-columns:1fr 1fr}
+    @media (max-width:900px){.hero-inner{grid-template-columns:1fr}.two-col{grid-template-columns:1fr}}
+
+    .timeline{position:relative;padding-left:22px}
+    .timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--orange),transparent)}
+    .tl-item{margin:12px 0}
+    .tl-item strong{color:var(--orange-2)}
+
+    .gallery-wrap{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .figure{position:relative;overflow:hidden;border-radius:14px;border:1px solid rgba(255,122,0,.25);background:#111}
+    .figure img{width:100%;height:260px;object-fit:cover;display:block;filter:saturate(1.03) contrast(1.05)}
+    .figure figcaption{position:absolute;left:10px;bottom:10px;font-size:.9rem;background:rgba(12,12,13,.6);padding:6px 8px;border-radius:999px;border:1px solid rgba(255,122,0,.35)}
+
+    .panel{display:grid;gap:12px;align-items:end;grid-template-columns:1.2fr .8fr .8fr auto}
+    .panel input[type="url"], .panel input[type="file"], .panel select{width:100%;padding:11px 12px;border-radius:12px;border:1px solid rgba(255,122,0,.35);background:#131314;color:var(--text)}
+    @media (max-width:950px){.panel{grid-template-columns:1fr}}
+
+    .anim{will-change:transform,opacity,filter}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    .anim-fade-in-up{animation:fadeInUp var(--dur,800ms) ease both}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+    .anim-float{animation:float var(--dur,5s) ease-in-out infinite}
+    @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 rgba(255,122,0,0)}50%{box-shadow:0 0 28px rgba(255,122,0,.35)}}
+    .anim-glow{animation:pulseGlow var(--dur,3.5s) ease-in-out infinite}
+    @keyframes slowSpin{to{transform:rotate(360deg)}}
+    .anim-spin{animation:slowSpin var(--dur,12s) linear infinite}
+    @keyframes slideIn{from{transform:translateX(16px);opacity:0}to{transform:translateX(0);opacity:1}}
+    .anim-slide-in{animation:slideIn var(--dur,700ms) ease-out both}
+
+    .muted{color:var(--muted)}
+    .badge{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,122,0,.35);background:#121213}
+    .spacer{height:24px}
+    footer{border-top:1px solid rgba(255,122,0,.25);padding:20px 0 50px;color:var(--muted)}
+    a.link{color:var(--orange-2)}
   </style>
 </head>
 <body>
-  <h1 style="color: #ff7a00; text-align:center; margin-top:100px;">Gala Couleur 2026</h1>
-  <p style="text-align:center; color:white;">Site de démonstration orange & noir — version minimaliste pour GitHub Pages.</p>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Accueil Gala Couleur 2026">
+        <div class="brand-badge" aria-hidden="true"><span>GC</span></div>
+        Gala Couleur 2026
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul>
+          <li><a href="#a-propos">À propos</a></li>
+          <li><a href="#programme">Programme</a></li>
+          <li><a href="#galerie">Galerie animée</a></li>
+          <li><a href="#infos">Infos</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div>
+          <span class="tag">Thème&nbsp;: <strong style="color:var(--orange-2)">Couleur</strong></span>
+          <h1>Gala Couleur <span style="color:var(--orange-2)">2026</span></h1>
+          <p class="lead">Une expérience immersive où le noir profond rencontre l’orange incandescent. Performances, arts visuels, et une scénographie chromatique pour une soirée inoubliable.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#galerie">Ajouter des images animées</a>
+            <a class="btn btn-ghost" href="#programme">Voir le programme</a>
+          </div>
+        </div>
+        <div class="card" role="img" aria-label="Visuel abstrait orange et noir">
+          <div class="badge" style="margin-bottom:10px">⚡ Ambiance</div>
+          <p class="muted" style="margin:0">Palette officielle&nbsp;: Noir #0c0c0d & Orange #ff7a00<br/>Tenue conseillée&nbsp;: touche orangée.</p>
+          <div class="spacer"></div>
+          <div class="badge">📍 Lieu</div>
+          <p style="margin:6px 0 0">À préciser — 2026</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="a-propos">
+      <div class="container two-col">
+        <div class="card">
+          <h2>À propos</h2>
+          <p>Le Gala Couleur 2026 est une célébration des émotions visuelles. Le noir structure l’espace, l’orange enflamme l’atmosphère. Cette page vous permet aussi d’<strong>insérer vos propres images</strong> et de les <strong>animer en un clic</strong> pour les écrans et totems de la soirée.</p>
+        </div>
+        <div class="card">
+          <h2>Couleurs</h2>
+          <ul>
+            <li><strong>Orange</strong> — accent, chaleur, énergie (#ff7a00)</li>
+            <li><strong>Noir</strong> — fond, élégance, contraste (#0c0c0d)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="programme">
+      <div class="container">
+        <h2>Programme (exemple)</h2>
+        <div class="card timeline">
+          <div class="tl-item"><strong>19:00</strong> — Ouverture des portes</div>
+          <div class="tl-item"><strong>20:00</strong> — Performance d’ouverture</div>
+          <div class="tl-item"><strong>21:30</strong> — Live band & installation visuelle</div>
+          <div class="tl-item"><strong>23:00</strong> — DJ set chromatique</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="galerie">
+      <div class="container">
+        <h2>Galerie animée — ajoutez vos images</h2>
+        <div class="card" style="margin-bottom:14px">
+          <div class="panel">
+            <div>
+              <label for="image-url" class="muted">URL de l’image (JPG, PNG, GIF, WebP, APNG)</label>
+              <input id="image-url" type="url" placeholder="https://exemple.com/visuel.webp" />
+            </div>
+            <div>
+              <label for="image-file" class="muted">Ou importer un fichier</label>
+              <input id="image-file" type="file" accept="image/*" />
+            </div>
+            <div>
+              <label for="anim-type" class="muted">Animation</label>
+              <select id="anim-type">
+                <option value="fade-in-up">Apparition</option>
+                <option value="float">Flottement</option>
+                <option value="glow">Halo</option>
+                <option value="spin">Rotation</option>
+                <option value="slide-in">Glissement</option>
+              </select>
+            </div>
+            <div>
+              <button id="add-btn" class="btn btn-primary" type="button">Ajouter</button>
+            </div>
+          </div>
+          <small class="muted">Astuce&nbsp;: vous pouvez combiner les effets (ajoutez l’image plusieurs fois avec des animations différentes, ou utilisez les contrôles avancés ci-dessous).</small>
+        </div>
+
+        <div class="gallery-wrap" id="gallery" aria-live="polite"></div>
+
+        <div class="spacer"></div>
+        <div class="card">
+          <details>
+            <summary><strong>Contrôles avancés (JS)</strong> — Ajouter des images par code</summary>
+            <pre style="white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color:#ffead9; background:#0f0f10; padding:12px; border-radius:12px; border:1px solid rgba(255,122,0,.25);">
+// Insérer une image avec animation et durée personnalisée
+insertAnimatedImage("https://images.unsplash.com/photo-1511506243460-7953b62d4dae?auto=format&fit=crop&w=1200&q=60", { animation: "float", duration: 6000, caption: "Affiche animée" })
+
+// Retirer toutes les images
+clearGallery()
+
+// Appliquer une animation à toutes les figures existantes
+applyAnimationToAll("glow", 3500)
+            </pre>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="infos">
+      <div class="container two-col">
+        <div class="card">
+          <h2>Infos pratiques</h2>
+          <ul>
+            <li>Tenue&nbsp;: chic, avec touche <strong>orange</strong></li>
+            <li>Accessibilité&nbsp;: site pensé pour être lisible (contrastes élevés)</li>
+            <li>Technique&nbsp;: galerie compatible GIF/APNG/WebP (animations natives conservées)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Contact</h2>
+          <p class="muted">Pour partenaires, bénévoles, médias — ajoutez votre email ici.</p>
+          <a class="btn btn-ghost" href="mailto:orga@gala-couleur.example">orga@gala-couleur.example</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 Gala Couleur — Design noir & orange. Fait avec ♥.
+    </div>
+  </footer>
+
+  <script>
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    const ANIM_CLASS = {
+      'fade-in-up':'anim-fade-in-up',
+      'float':'anim-float',
+      'glow':'anim-glow',
+      'spin':'anim-spin',
+      'slide-in':'anim-slide-in',
+    };
+
+    function makeFigure(src, { animation='fade-in-up', duration=800, caption='' }={}){
+      const fig = document.createElement('figure');
+      fig.className = 'figure anim ' + (ANIM_CLASS[animation] || 'anim-fade-in-up');
+      fig.style.setProperty('--dur', (typeof duration==='number'? duration+'ms': duration));
+      fig.setAttribute('tabindex','0');
+      fig.setAttribute('role','group');
+
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = caption || 'Visuel gala';
+
+      const cap = document.createElement('figcaption');
+      cap.textContent = caption || '';
+
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-ghost';
+      btn.style.position = 'absolute';
+      btn.style.top = '10px';
+      btn.style.right = '10px';
+      btn.style.padding = '6px 10px';
+      btn.style.backdropFilter = 'blur(3px)';
+      btn.style.fontSize = '12px';
+      btn.textContent = 'Retirer';
+      btn.addEventListener('click', () => fig.remove());
+
+      fig.addEventListener('mouseenter', () => fig.style.animationPlayState = 'paused');
+      fig.addEventListener('mouseleave', () => fig.style.animationPlayState = 'running');
+
+      fig.append(img, cap, btn);
+      return fig;
+    }
+
+    function insertAnimatedImage(src, opts={}){
+      const gallery = $('#gallery');
+      if(!gallery) return;
+      const figure = makeFigure(src, opts);
+      gallery.prepend(figure);
+      return figure;
+    }
+    window.insertAnimatedImage = insertAnimatedImage;
+
+    function clearGallery(){ $('#gallery').innerHTML = '' }
+    window.clearGallery = clearGallery;
+
+    function applyAnimationToAll(animation='glow', duration=3000){
+      $$('#gallery .figure').forEach(fig=>{
+        fig.className = fig.className.replace(/anim-[a-z-]+/g,'').trim();
+        fig.classList.add('anim', ANIM_CLASS[animation] || 'anim-glow');
+        fig.style.setProperty('--dur', (typeof duration==='number'? duration+'ms': duration));
+      });
+    }
+    window.applyAnimationToAll = applyAnimationToAll;
+
+    $('#add-btn').addEventListener('click', ()=>{
+      const url = $('#image-url').value.trim();
+      const anim = $('#anim-type').value;
+      const fileInput = $('#image-file');
+      let src = url;
+      if(fileInput.files && fileInput.files[0]){
+        src = URL.createObjectURL(fileInput.files[0]);
+      }
+      if(!src){ alert('Ajoutez une URL valide ou importez un fichier.'); return }
+      insertAnimatedImage(src, { animation: anim, duration: (anim==='float'? 5000:900), caption: fileInput.files[0]?.name || '' });
+      $('#image-url').value = ''; fileInput.value = '';
+    });
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      insertAnimatedImage('https://images.unsplash.com/photo-1482192505345-5655af888cc4?auto=format&fit=crop&w=1200&q=60', { animation:'fade-in-up', duration:900, caption:'Lumières' });
+      insertAnimatedImage('https://images.unsplash.com/photo-1511506243460-7953b62d4dae?auto=format&fit=crop&w=1200&q=60', { animation:'float', duration:5000, caption:'Scène' });
+      insertAnimatedImage('https://images.unsplash.com/photo-1516306580123-e6e52b1b7bff?auto=format&fit=crop&w=1200&q=60', { animation:'glow', duration:3500, caption:'Textures' });
+    });
+  </script>
 </body>
 </html>
