@@ -1,205 +1,260 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gala Couleur 2026</title>
-  <meta name="description" content="Gala Couleur 2026 – Une soirée immersive où l’orange et le noir célèbrent l’élégance et l’énergie.">
-
+  <meta name="description" content="Gala Couleur 2026 — Programme, tenue du jour, lieu & horaires, RSVP." />
   <style>
-    :root {
-      --orange: #ff7a00;
-      --black: #0c0c0d;
-      --text: #0c0c0d;
+    :root{
+      --orange:#ff7a00; --orange-2:#ff9a3b; --ink:#0c0c0d; --muted:#5a5a60; --line:#ececf0;
+      --radius:16px; --shadow:0 8px 24px rgba(0,0,0,.08)
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans";
+      color:var(--ink); background:#fff; line-height:1.55; scroll-behavior:smooth;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    /* ===== Fond diaporama (plein écran) ===== */
+    .background-slideshow{position:fixed;inset:0;z-index:-2;overflow:hidden;background:#000}
+    .background-slideshow img{
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+      opacity:0; animation:fade 30s infinite; filter:saturate(1.05) contrast(1.05)
     }
+    .background-slideshow img:nth-child(1){animation-delay:0s}
+    .background-slideshow img:nth-child(2){animation-delay:10s}
+    .background-slideshow img:nth-child(3){animation-delay:20s}
+    @keyframes fade{0%,33%{opacity:1}40%,100%{opacity:0}}
 
-    body {
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      background: #fff;
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+    /* Voile blanc pour lisibilité */
+    .page-overlay{position:fixed;inset:0;z-index:-1;pointer-events:none;background:rgba(255,255,255,.6);backdrop-filter:blur(2px)}
 
-    header {
-      text-align: center;
-      padding: 2rem 1rem;
-      color: var(--black);
-      z-index: 2;
-      position: relative;
-    }
+    /* ===== Layout & composants ===== */
+    .container{width:min(1100px,92vw);margin:0 auto}
+    header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800}
+    .brand-badge{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--orange),var(--orange-2));box-shadow:var(--shadow);display:grid;place-items:center;color:#fff;font-weight:900}
+    .nav ul{list-style:none;display:flex;gap:16px;margin:0;padding:0;flex-wrap:wrap}
+    .nav a{color:var(--ink);text-decoration:none;padding:8px 10px;border-radius:10px}
+    .nav a:hover{color:#fff;background:linear-gradient(135deg,var(--orange),var(--orange-2))}
 
-    h1 {
-      font-size: 3rem;
-      color: var(--orange);
-    }
-
-    h2 {
-      margin-top: 2rem;
-      color: var(--black);
-      text-align: center;
-    }
-
-    .content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      padding: 1rem;
-      max-width: 800px;
-      margin: auto;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 1.5rem;
-      background: var(--orange);
-      color: white;
-      padding: 0.8rem 1.4rem;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-
-    .btn:hover {
-      background: #ff9733;
-    }
-
-    /* --- FOND IMAGES EN FONDU --- */
-    .background-slideshow {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      overflow: hidden;
-    }
-
-    .background-slideshow img {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      animation: fade 30s infinite;
-    }
-
-    .background-slideshow img:nth-child(1) { animation-delay: 0s; }
-    .background-slideshow img:nth-child(2) { animation-delay: 10s; }
-    .background-slideshow img:nth-child(3) { animation-delay: 20s; }
-
-    @keyframes fade {
-      0%, 33% { opacity: 1; }
-      40%, 100% { opacity: 0; }
-    }
-
-    /* --- FORMULAIRE RSVP --- */
-    form {
-      position: relative;
-      z-index: 2;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(8px);
-      padding: 2rem;
-      border-radius: 12px;
-      max-width: 600px;
-      margin: 3rem auto;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    }
-
-    form label {
-      font-weight: 600;
-      color: var(--black);
-      display: block;
-      margin-bottom: 0.4rem;
-      text-align: left;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 0.8rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      font-size: 1rem;
-    }
-
-    button {
-      background: var(--orange);
-      color: white;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background: #ff9733;
-    }
+    .hero{padding:56px 0 20px}
+    .hero-inner{display:grid;gap:24px;align-items:center;grid-template-columns:1.2fr .8fr}
+    @media (max-width:900px){.hero-inner{grid-template-columns:1fr}}
+    h1{font-size:clamp(2rem,3vw + 1rem,3.25rem);margin:8px 0 10px;line-height:1.1}
+    .accent{color:var(--orange)}
+    .lead{font-size:clamp(1rem,.6vw + .8rem,1.15rem);color:#2a2a2f}
+    .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    section{padding:32px 0}
+    section h2{font-size:clamp(1.4rem,2.2vw + .6rem,2rem);margin:0 0 14px}
+    .two-col{display:grid;gap:18px;grid-template-columns:1fr 1fr}
+    @media (max-width:900px){.two-col{grid-template-columns:1fr}}
+    .btn{appearance:none;border:1px solid var(--line);cursor:pointer;font-weight:700;padding:12px 18px;border-radius:12px;background:#fff}
+    .btn-primary{background:linear-gradient(135deg,var(--orange),var(--orange-2));color:#fff;border:none}
+    .btn-ghost{background:#fff;color:var(--ink)}
+    .muted{color:var(--muted)}
+    .list{margin:0;padding-left:18px}
+    .list li{margin:6px 0}
+    footer{border-top:1px solid var(--line);padding:20px 0 50px;color:var(--muted);text-align:center}
   </style>
 </head>
-
 <body>
-  <!-- FOND D’IMAGES EN FONDU -->
-  <div class="background-slideshow">
-    <img src="https://images.unsplash.com/photo-1515168833906-d2a3b82b302a?auto=format&fit=crop&w=1400&q=60" alt="">
-    <img src="https://images.unsplash.com/photo-1603575448363-89dcb8d7d2cc?auto=format&fit=crop&w=1400&q=60" alt="">
-    <img src="https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=1400&q=60" alt="">
+  <!-- FOND -->
+  <div class="background-slideshow" aria-hidden="true">
+    <img src="https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?auto=format&fit=crop&w=1600&q=60" alt="">
+    <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1600&q=60" alt="">
+    <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=1600&q=60" alt="">
   </div>
+  <div class="page-overlay" aria-hidden="true"></div>
 
-  <!-- CONTENU -->
+  <!-- HEADER / MENU -->
   <header>
-    <h1>Gala Couleur 2026</h1>
-    <p>Une expérience immersive où l’orange et le noir se rencontrent dans une atmosphère d’élégance et de chaleur.</p>
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Accueil Gala Couleur 2026">
+        <div class="brand-badge" aria-hidden="true">GC</div>
+        Gala Couleur 2026
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul>
+          <li><a href="#programme">Programme</a></li>
+          <li><a href="#tenue">Tenue du jour</a></li>
+          <li><a href="#infos">Lieu & horaires</a></li>
+          <li><a href="#rsvp">RSVP</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <div class="content">
-    <a href="#rsvp" class="btn">Confirmer ma présence</a>
-  </div>
+  <!-- HERO -->
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div>
+          <span class="muted">Édition</span>
+          <h1>Gala Couleur <span class="accent">2026</span></h1>
+          <p class="lead">Une expérience élégante où le blanc illumine la page, le noir guide la lecture et l’orange signe l’énergie de la soirée.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+            <a class="btn btn-primary" href="#rsvp">Confirmer ma venue</a>
+            <a class="btn btn-ghost" href="#programme">Voir le programme</a>
+          </div>
+        </div>
+        <div class="card">
+          <strong>Thème</strong>
+          <p class="muted" style="margin:6px 0 0">Couleur — équilibre entre sobriété et éclat. Dress code : chic, avec une touche <span class="accent">orange</span>.</p>
+          <div style="height:10px"></div>
+          <strong>Lieu</strong>
+          <p style="margin:6px 0 0">À préciser — 2026</p>
+        </div>
+      </div>
+    </section>
 
-  <!-- FORMULAIRE RSVP -->
-  <section id="rsvp">
-    <form action="https://formspree.io/f/xanpvwkv" method="POST">
-      <h2>Formulaire RSVP</h2>
+    <!-- PROGRAMME -->
+    <section id="programme">
+      <div class="container">
+        <h2>Programme</h2>
+        <div class="card">
+          <ul class="list">
+            <li><strong>19:00</strong> — Accueil & cocktail</li>
+            <li><strong>20:00</strong> — Dîner & discours d’ouverture</li>
+            <li><strong>21:30</strong> — Performance artistique & lumière</li>
+            <li><strong>23:00</strong> — DJ set & clôture</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-      <label>Prénom</label>
-      <input type="text" name="prenom" required>
+    <!-- TENUE DU JOUR -->
+    <section id="tenue">
+      <div class="container two-col">
+        <div class="card">
+          <h2>Tenue du jour</h2>
+          <ul class="list">
+            <li>Tenue <strong>chic</strong>, confortable pour danser</li>
+            <li>Ajoutez une <strong>touche orange</strong> : accessoire, cravate, pochette, chaussures, maquillage…</li>
+            <li>Privilégiez les matières sobres (noir, blanc, ivoire), rehaussées d’un accent lumineux</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Idées express</h2>
+          <ul class="list">
+            <li>Robe noire + ceinture ou escarpins orange</li>
+            <li>Costume sombre + pochette ou cravate orange</li>
+            <li>Manucure/eye-liner orangé, broche, foulard, chaussettes fun</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-      <label>Nom</label>
-      <input type="text" name="nom" required>
+    <!-- LIEU & HORAIRES -->
+    <section id="infos">
+      <div class="container two-col">
+        <div class="card">
+          <h2>Lieu & horaires</h2>
+          <p><strong>Adresse :</strong> à confirmer</p>
+          <p><strong>Ouverture :</strong> 19:00 — Fin : 00:30</p>
+          <p class="muted">Accès PMR prévu. Parking et transports communiqués prochainement.</p>
+        </div>
+        <div class="card">
+          <h2>Conseils pratiques</h2>
+          <ul class="list">
+            <li>Arrivez 15–20 min en avance pour le vestiaire</li>
+            <li>Photocall à l’entrée — n’oubliez pas votre sourire ✨</li>
+            <li>Bar sans espèces (CB / paiement mobile)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-      <label>Email</label>
-      <input type="email" name="email" required>
+    <!-- RSVP -->
+    <section id="rsvp">
+      <div class="container">
+        <h2>RSVP</h2>
+        <form action="https://formspree.io/f/xanpvwkv" method="POST" class="card" style="display:grid;gap:12px;max-width:760px;margin:0 auto">
+          <div class="two-col" style="grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <label>Prénom</label>
+              <input name="prenom" required style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--line)">
+            </div>
+            <div>
+              <label>Nom</label>
+              <input name="nom" required style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--line)">
+            </div>
+          </div>
 
-      <label>Présence</label>
-      <select name="presence" required>
-        <option value="Oui">Oui, je viens</option>
-        <option value="Non">Non</option>
-        <option value="Peut-être">Peut-être</option>
-      </select>
+          <div>
+            <label>E-mail</label>
+            <input type="email" name="email" required style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--line)">
+          </div>
 
-      <label>Accompagnants</label>
-      <input type="number" name="guests" min="0" value="0">
+          <div class="two-col" style="grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <label>Présence</label>
+              <select name="presence" required style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--line)">
+                <option value="Oui">Oui, je viens</option>
+                <option value="Non">Non</option>
+                <option value="Peut-être">Peut-être</option>
+              </select>
+            </div>
+            <div>
+              <label>Accompagnants</label>
+              <input type="number" name="guests" min="0" value="0" style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--line)">
+            </div>
+          </div>
 
-      <label>Message (optionnel)</label>
-      <textarea name="message" rows="3"></textarea>
+          <div>
+            <label>Message (optionnel)</label>
+            <textarea name="message" rows="3" style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--line)"></textarea>
+          </div>
 
-      <input type="text" name="_honey" style="display:none">
-      <input type="hidden" name="_subject" value="RSVP — Gala Couleur 2026">
-      <input type="hidden" name="_next" value="https://limsyx.github.io/gala-2026-limsy/merci.html">
+          <!-- Anti-spam + redirection -->
+          <input type="text" name="_honey" style="display:none">
+          <input type="hidden" name="_subject" value="RSVP — Gala Couleur 2026">
+          <input type="hidden" name="_next" value="https://limsyx.github.io/gala-2026-limsy/merci.html">
 
-      <button type="submit">Envoyer</button>
-    </form>
-  </section>
+          <button class="btn btn-primary" type="submit">Envoyer l’RSVP</button>
+          <small class="muted">En soumettant, vous acceptez d’être contacté·e pour des informations liées au Gala.</small>
+        </form>
+      </div>
+    </section>
 
-  <footer style="text-align:center; padding:2rem; color:var(--black); font-size:0.9rem;">
-    © 2026 Gala Couleur — Créé avec 💫 sur GitHub Pages
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="container two-col">
+        <div class="card">
+          <h2>FAQ</h2>
+          <p><strong>Je peux venir sans invitation ?</strong><br> L’événement est sur inscription. Merci d’utiliser le formulaire RSVP.</p>
+          <p><strong>Photos autorisées ?</strong><br> Oui, tant que vous respectez la confidentialité des invités.</p>
+        </div>
+        <div class="card">
+          <h2>Boissons & restauration</h2>
+          <p>Un cocktail d’accueil est prévu. Options végétariennes disponibles.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container two-col">
+        <div class="card">
+          <h2>Contact</h2>
+          <p>Partenariats, presse, bénévoles :</p>
+          <a class="btn" href="mailto:orga@gala-couleur.example">orga@gala-couleur.example</a>
+        </div>
+        <div class="card">
+          <h2>Suivre les infos</h2>
+          <p class="muted">Revenez régulièrement : nous mettons à jour le lieu, les artistes et les surprises 🎈</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Gala Couleur — Tous droits réservés.
   </footer>
 </body>
 </html>
